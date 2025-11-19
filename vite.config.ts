@@ -9,5 +9,12 @@ export default defineConfig({
         alias: {
             "@": path.resolve(__dirname, "./src"),
         },
+        preserveSymlinks: true, // Prevent traversing parent directories
+    },
+    optimizeDeps: {
+        include: [
+            "@untitledui/icons",
+            "@untitledui/file-icons",
+        ],
     },
 });

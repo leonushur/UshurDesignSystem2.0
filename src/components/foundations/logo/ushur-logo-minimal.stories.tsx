@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { UntitledLogoMinimal } from "./untitledui-logo-minimal";
+import { UshurLogoMinimal } from "./ushur-logo-minimal";
 
-const meta: Meta<typeof UntitledLogoMinimal> = {
+const meta: Meta<typeof UshurLogoMinimal> = {
     title: "Foundations/Logos/Minimal",
-    component: UntitledLogoMinimal,
+    component: UshurLogoMinimal,
     argTypes: {
         className: {
             control: "text",
@@ -20,7 +20,7 @@ const meta: Meta<typeof UntitledLogoMinimal> = {
 
 export default meta;
 
-type Story = StoryObj<typeof UntitledLogoMinimal>;
+type Story = StoryObj<typeof UshurLogoMinimal>;
 
 export const Default: Story = {};
 
@@ -33,7 +33,7 @@ export const Large: Story = {
 export const Inverse: Story = {
     render: (args) => (
         <div className="rounded-xl bg-secondary-solid p-4">
-            <UntitledLogoMinimal {...args} className="text-white" />
+            <UshurLogoMinimal {...args} className="text-white" />
         </div>
     ),
 };

@@ -3,8 +3,8 @@ import { useRef, useState } from "react";
 import { ChevronDown } from "@untitledui/icons";
 import { Button as AriaButton, Dialog as AriaDialog, DialogTrigger as AriaDialogTrigger, Popover as AriaPopover } from "react-aria-components";
 import { Button } from "@/components/base/buttons/button";
-import { UntitledLogo } from "@/components/foundations/logo/untitledui-logo";
-import { UntitledLogoMinimal } from "@/components/foundations/logo/untitledui-logo-minimal";
+import { UshurLogo } from "@/components/foundations/logo/ushur-logo";
+import { UshurLogoMinimal } from "@/components/foundations/logo/ushur-logo-minimal";
 import { DropdownMenuSimple } from "@/components/marketing/header-navigation/dropdown-header-navigation";
 import { cx } from "@/utils/cx";
 
@@ -115,8 +115,8 @@ export const Header = ({ items = headerNavItems, isFullWidth, isFloating, classN
                     )}
                 >
                     <div className="flex flex-1 items-center gap-5">
-                        <UntitledLogo className="h-8 md:max-lg:hidden" />
-                        <UntitledLogoMinimal className="hidden h-8 md:inline-block lg:hidden" />
+                        <UshurLogo className="h-8 md:max-lg:hidden" />
+                        <UshurLogoMinimal className="hidden h-8 md:inline-block lg:hidden" />
 
                         {/* Desktop navigation */}
                         <nav className="max-md:hidden">

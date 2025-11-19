@@ -1,6 +1,6 @@
 # Ushur Design System for Vite
 
-This repository hosts the Ushur Design System component library, powered by the Untitled UI React kit and wired into a Vite + Storybook workflow. It provides every available foundation token, component, and complex pattern so product teams can explore, test, and integrate the design system quickly.
+This repository hosts the Ushur Design System component library, powered by the Ushur UI React kit and wired into a Vite + Storybook workflow. It provides every available foundation token, component, and complex pattern so product teams can explore, test, and integrate the design system quickly.
 
 ## Getting started
 
@@ -41,12 +41,12 @@ Key folders:
 
 ## Resources
 
-Ushur Design System leverages the Untitled UI React open-source kit.
+Ushur Design System leverages the Ushur UI React open-source kit.
 
-- [Untitled UI React documentation](https://www.untitledui.com/react/docs/introduction)
-- [Untitled UI Figma library](https://www.untitledui.com/figma)
-- [Untitled UI Icons](https://www.untitledui.com/react/resources/icons)
+- [Ushur UI React documentation](https://www.untitledui.com/react/docs/introduction)
+- [Ushur UI Figma library](https://www.untitledui.com/figma)
+- [Ushur UI Icons](https://www.untitledui.com/react/resources/icons)
 
 ## License
 
-Ushur Design System builds on Untitled UI React components, which are licensed under the MIT license. You may use the components freely in commercial projects; see the [Untitled UI license](https://www.untitledui.com/license) for details.
+Ushur Design System builds on Ushur UI React components, which are licensed under the MIT license. You may use the components freely in commercial projects; see the [Ushur UI license](https://www.untitledui.com/license) for details.

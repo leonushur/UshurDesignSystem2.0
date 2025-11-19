@@ -4,7 +4,7 @@ import { Button as AriaButton, DialogTrigger, Popover } from "react-aria-compone
 import { Avatar } from "@/components/base/avatar/avatar";
 import { BadgeWithDot } from "@/components/base/badges/badges";
 import { Input } from "@/components/base/input/input";
-import { UntitledLogo } from "@/components/foundations/logo/untitledui-logo";
+import { UshurLogo } from "@/components/foundations/logo/ushur-logo";
 import { cx } from "@/utils/cx";
 import { MobileNavigationHeader } from "./base-components/mobile-header";
 import { NavAccountCard, NavAccountMenu } from "./base-components/nav-account-card";
@@ -59,7 +59,7 @@ export const HeaderNavigationBase = ({
             <MobileNavigationHeader>
                 <aside className="flex h-full max-w-full flex-col justify-between overflow-auto border-r border-secondary bg-primary pt-4 lg:pt-6">
                     <div className="flex flex-col gap-5 px-4 lg:px-5">
-                        <UntitledLogo className="h-8" />
+                        <UshurLogo className="h-8" />
                         <Input shortcut size="sm" aria-label="Search" placeholder="Search" icon={SearchLg} />
                     </div>
 
@@ -106,7 +106,7 @@ export const HeaderNavigationBase = ({
                                 href="/"
                                 className="rounded-xs outline-focus-ring focus-visible:outline-2 focus-visible:outline-offset-2"
                             >
-                                <UntitledLogo className="h-8" />
+                                <UshurLogo className="h-8" />
                             </a>
 
                             <nav>
