@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Bell01, ShieldCheck, Zap } from "@untitledui/icons";
+import { Bell01, ShieldTick, Zap } from "@untitledui/icons";
 import { FeaturedIcon } from "./featured-icon";
 
 const meta: Meta<typeof FeaturedIcon> = {
@@ -20,7 +20,7 @@ const meta: Meta<typeof FeaturedIcon> = {
         },
     },
     args: {
-        icon: ShieldCheck,
+        icon: ShieldTick,
         color: "brand",
         size: "md",
         theme: "light",

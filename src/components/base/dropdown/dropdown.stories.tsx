@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Check, Copy, Edit02, Trash02 } from "@untitledui/icons";
+import { Check, Edit02, File02, Trash02 } from "@untitledui/icons";
 import { Dropdown } from "./dropdown";
 
 const meta: Meta = {
@@ -21,7 +21,7 @@ const menuContent = (
                 Actions
             </Dropdown.SectionHeader>
             <Dropdown.Item id="rename" label="Rename" icon={Edit02} />
-            <Dropdown.Item id="duplicate" label="Duplicate" icon={Copy} addon="⌘D" />
+            <Dropdown.Item id="duplicate" label="Duplicate" icon={File02} addon="⌘D" />
             <Dropdown.Item id="archive" label="Archive" icon={Trash02} />
         </Dropdown.Section>
         <Dropdown.Separator />

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FilterFunnel01, LayoutGrid01, LayoutList, Settings01 } from "@untitledui/icons";
+import { FilterFunnel01, LayoutGrid01, LayoutLeft, Settings01 } from "@untitledui/icons";
 import { ButtonGroup, ButtonGroupItem } from "./button-group";
 
 const meta: Meta<typeof ButtonGroup> = {
@@ -28,7 +28,7 @@ type Story = StoryObj<typeof ButtonGroup>;
 
 const renderItems = () => (
     <>
-        <ButtonGroupItem id="list" value="list" iconLeading={LayoutList}>
+        <ButtonGroupItem id="list" value="list" iconLeading={LayoutLeft}>
             List
         </ButtonGroupItem>
         <ButtonGroupItem id="grid" value="grid" iconLeading={LayoutGrid01}>
@@ -55,7 +55,7 @@ export const Large: Story = {
 export const IconOnly: Story = {
     render: (args) => (
         <ButtonGroup {...args}>
-            <ButtonGroupItem id="list-icon" value="list-icon" iconLeading={LayoutList} aria-label="List view" />
+            <ButtonGroupItem id="list-icon" value="list-icon" iconLeading={LayoutLeft} aria-label="List view" />
             <ButtonGroupItem id="grid-icon" value="grid-icon" iconLeading={LayoutGrid01} aria-label="Grid view" />
             <ButtonGroupItem id="settings" value="settings" iconLeading={Settings01} aria-label="Settings" />
         </ButtonGroup>
