@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { ChevronDown } from "@untitledui/icons";
+import { ChevronDown } from "@untitledui-pro/icons/line";
 import { cx } from "@/utils/cx";
 
 interface SharedFAQProps {

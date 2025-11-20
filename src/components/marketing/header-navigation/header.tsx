@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useRef, useState } from "react";
-import { ChevronDown } from "@untitledui/icons";
+import { ChevronDown } from "@untitledui-pro/icons/line";
 import { Button as AriaButton, Dialog as AriaDialog, DialogTrigger as AriaDialogTrigger, Popover as AriaPopover } from "react-aria-components";
 import { Button } from "@/components/base/buttons/button";
 import { UshurLogo } from "@/components/foundations/logo/ushur-logo";

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { InfoCircle } from "@untitledui/icons";
+import { InfoCircle } from "@untitledui-pro/icons/line";
 import { Tooltip, TooltipTrigger } from "./tooltip";
 
 const meta: Meta<typeof Tooltip> = {

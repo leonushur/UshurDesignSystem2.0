@@ -12,9 +12,6 @@ export default defineConfig({
         preserveSymlinks: true, // Prevent traversing parent directories
     },
     optimizeDeps: {
-        include: [
-            "@untitledui/icons",
-            "@untitledui/file-icons",
-        ],
+        include: ["@untitledui/file-icons"],
     },
 });

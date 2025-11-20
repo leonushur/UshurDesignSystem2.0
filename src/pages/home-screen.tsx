@@ -1,4 +1,4 @@
-import { BookOpen01, Check, Copy01, Cube01, HelpCircle } from "@untitledui/icons";
+import { BookOpen01, Check, Copy01, Cube01, HelpCircle } from "@untitledui-pro/icons/line";
 import { Button } from "@/components/base/buttons/button";
 import { ButtonUtility } from "@/components/base/buttons/button-utility";
 import { UshurLogoMinimal } from "@/components/foundations/logo/ushur-logo-minimal";

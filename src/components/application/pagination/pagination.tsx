@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight } from "@untitledui/icons";
+import { ArrowLeft, ArrowRight } from "@untitledui-pro/icons/line";
 import { ButtonGroup, ButtonGroupItem } from "@/components/base/button-group/button-group";
 import { Button } from "@/components/base/buttons/button";
 import { useBreakpoint } from "@/hooks/use-breakpoint";

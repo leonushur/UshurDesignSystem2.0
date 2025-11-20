@@ -23,8 +23,6 @@ const config: StorybookConfig = {
         config.resolve.alias = {
             ...(config.resolve.alias ?? {}),
             "@": join(__dirname, "../src"),
-            // Explicitly resolve @untitledui/icons to prevent parent directory lookups
-            "@untitledui/icons": join(__dirname, "../node_modules/@untitledui/icons"),
         };
         
         // Prevent module resolution from traversing parent directories
@@ -32,11 +30,7 @@ const config: StorybookConfig = {
         
         // Ensure @untitledui/icons is pre-bundled to avoid resolution issues
         config.optimizeDeps = config.optimizeDeps ?? {};
-        config.optimizeDeps.include = [
-            ...(config.optimizeDeps.include ?? []),
-            "@untitledui/icons",
-            "@untitledui/file-icons",
-        ];
+        config.optimizeDeps.include = [...(config.optimizeDeps.include ?? []), "@untitledui/file-icons"];
 
         return config;
     },

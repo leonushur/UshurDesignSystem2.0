@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { SearchLg, Upload01 } from "@untitledui/icons";
+import { SearchLg, Upload01 } from "@untitledui-pro/icons/line";
 import { Button } from "@/components/base/buttons/button";
 import { EmptyState } from "./empty-state";
 

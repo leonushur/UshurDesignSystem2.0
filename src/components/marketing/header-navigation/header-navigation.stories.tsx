@@ -3,7 +3,7 @@ import { Header } from "./header";
 import { DropdownMenuSimple } from "./dropdown-header-navigation";
 import { NavMenuItemLink } from "./base-components/nav-menu-item";
 import { Button } from "@/components/base/buttons/button";
-import { BookClosed, LifeBuoy01, PlayCircle, Stars02 } from "@untitledui/icons";
+import { BookClosed, LifeBuoy01, PlayCircle, Stars02 } from "@untitledui-pro/icons/line";
 
 const marketingMenu = (
     <div className="grid gap-3 rounded-2xl bg-primary p-3 shadow-lg ring-1 ring-secondary_alt md:max-w-96">

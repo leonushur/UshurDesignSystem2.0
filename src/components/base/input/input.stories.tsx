@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { SearchLg } from "@untitledui/icons";
+import { SearchLg } from "@untitledui-pro/icons/line";
 import { Input } from "./input";
 
 const meta: Meta<typeof Input> = {

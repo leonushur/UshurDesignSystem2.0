@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Check, Edit02, File02, Trash02 } from "@untitledui/icons";
+import { Check, Edit02, File02, Trash02 } from "@untitledui-pro/icons/line";
 import { Dropdown } from "./dropdown";
 
 const meta: Meta = {

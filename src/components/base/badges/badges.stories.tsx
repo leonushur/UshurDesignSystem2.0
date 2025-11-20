@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Bell01, CheckCircle, Heart } from "@untitledui/icons";
+import { Bell01, CheckCircle, Heart } from "@untitledui-pro/icons/line";
 import {
     Badge,
     BadgeIcon,

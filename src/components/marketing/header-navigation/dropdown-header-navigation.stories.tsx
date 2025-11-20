@@ -3,7 +3,7 @@ import { DropdownMenuSimple } from "./dropdown-header-navigation";
 import { NavMenuItemLink } from "./base-components/nav-menu-item";
 import { Button } from "@/components/base/buttons/button";
 import { BadgeWithDot } from "@/components/base/badges/badges";
-import { BookClosed, FileCode01, LifeBuoy01, PlayCircle, Stars02 } from "@untitledui/icons";
+import { BookClosed, FileCode01, LifeBuoy01, PlayCircle, Stars02 } from "@untitledui-pro/icons/line";
 
 const meta: Meta<typeof DropdownMenuSimple> = {
     title: "Marketing/Header Navigation/Dropdown Menu",

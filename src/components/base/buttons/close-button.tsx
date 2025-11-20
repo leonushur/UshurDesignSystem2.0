@@ -1,4 +1,4 @@
-import { X as CloseIcon } from "@untitledui/icons";
+import { X as CloseIcon } from "@untitledui-pro/icons/line";
 import { Button as AriaButton, type ButtonProps as AriaButtonProps } from "react-aria-components";
 import { cx } from "@/utils/cx";
 

@@ -1,4 +1,4 @@
-import { SearchLg } from "@untitledui/icons";
+import { SearchLg } from "@untitledui-pro/icons/line";
 import { Input } from "@/components/base/input/input";
 import { UshurLogo } from "@/components/foundations/logo/ushur-logo";
 import { MobileNavigationHeader } from "../base-components/mobile-header";

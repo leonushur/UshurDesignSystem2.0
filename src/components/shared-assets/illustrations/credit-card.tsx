@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import { AlertCircle } from "@untitledui/icons";
+import { AlertCircle } from "@untitledui-pro/icons/line";
 import { cx } from "@/utils/cx";
 
 interface IllustrationProps extends HTMLAttributes<HTMLDivElement> {

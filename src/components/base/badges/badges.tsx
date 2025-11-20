@@ -1,5 +1,5 @@
 import type { MouseEventHandler, ReactNode } from "react";
-import { X as CloseX } from "@untitledui/icons";
+import { X as CloseX } from "@untitledui-pro/icons/line";
 import { Dot } from "@/components/foundations/dot-icon";
 import { cx } from "@/utils/cx";
 import type {

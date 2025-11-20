@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SearchLg } from "@untitledui/icons";
+import { SearchLg } from "@untitledui-pro/icons/line";
 import { Input } from "@/components/base/input/input";
 import { UshurLogo } from "@/components/foundations/logo/ushur-logo";
 import { cx } from "@/utils/cx";

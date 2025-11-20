@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { HeaderSectionCentered, HeaderSectionSplit } from "./header-sections";
 import { Button } from "@/components/base/buttons/button";
-import { PlayCircle } from "@untitledui/icons";
+import { PlayCircle } from "@untitledui-pro/icons/line";
 
 const meta: Meta<typeof HeaderSectionCentered> = {
     title: "Marketing/Header Sections",

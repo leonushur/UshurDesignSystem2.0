@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FilterFunnel01, LayoutGrid01, LayoutLeft, Settings01 } from "@untitledui/icons";
+import { FilterFunnel01, LayoutGrid01, LayoutLeft, Settings01 } from "@untitledui-pro/icons/line";
 import { ButtonGroup, ButtonGroupItem } from "./button-group";
 
 const meta: Meta<typeof ButtonGroup> = {

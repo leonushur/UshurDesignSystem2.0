@@ -13,8 +13,8 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.11",
+    "@untitledui-pro/icons": "^0.0.2",
     "@untitledui/file-icons": "^0.0.8",
-    "@untitledui/icons": "^0.0.19",
     "motion": "^12.23.12",
     "react": "^19.1.1",
     "react-aria": "^3.42.0",

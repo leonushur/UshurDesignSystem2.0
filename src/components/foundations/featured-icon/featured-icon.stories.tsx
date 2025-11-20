@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Bell01, ShieldTick, Zap } from "@untitledui/icons";
+import { Bell01, ShieldTick, Zap } from "@untitledui-pro/icons/line";
 import { FeaturedIcon } from "./featured-icon";
 
 const meta: Meta<typeof FeaturedIcon> = {

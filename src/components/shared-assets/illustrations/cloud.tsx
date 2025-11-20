@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "react";
-import { SearchLg } from "@untitledui/icons";
+import { SearchLg } from "@untitledui-pro/icons/line";
 import { cx } from "@/utils/cx";
 
 interface IllustrationProps extends HTMLAttributes<HTMLDivElement> {

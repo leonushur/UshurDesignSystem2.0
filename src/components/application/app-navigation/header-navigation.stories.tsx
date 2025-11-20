@@ -15,7 +15,7 @@ import {
     Settings02,
     ShieldTick,
     Users01,
-} from "@untitledui/icons";
+} from "@untitledui-pro/icons/line";
 
 const primaryItems = [
     { label: "Home", href: "/home", current: true, icon: Home02 },

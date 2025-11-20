@@ -3,7 +3,7 @@ import { ContactSectionCards, ContactSectionForm } from "./contact-sections";
 import { Button } from "@/components/base/buttons/button";
 import { Input } from "@/components/base/input/input";
 import { TextArea } from "@/components/base/textarea/textarea";
-import { Mail01, Phone, Map01 } from "@untitledui/icons";
+import { Mail01, Phone, Map01 } from "@untitledui-pro/icons/line";
 
 const meta: Meta<typeof ContactSectionCards> = {
     title: "Marketing/Contact Sections",

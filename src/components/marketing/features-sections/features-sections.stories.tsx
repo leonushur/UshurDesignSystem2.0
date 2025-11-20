@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FeatureSectionCards, FeatureSectionIconGrid } from "./features-sections";
 import { Button } from "@/components/base/buttons/button";
-import { ShieldTick, Zap, BarChartSquare02 } from "@untitledui/icons";
+import { ShieldTick, Zap, BarChartSquare02 } from "@untitledui-pro/icons/line";
 import { Badge } from "@/components/base/badges/badges";
 
 const meta: Meta<typeof FeatureSectionIconGrid> = {

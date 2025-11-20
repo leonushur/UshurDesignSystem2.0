@@ -28,7 +28,7 @@ import {
     Shield01,
     TrendUp01,
     Users01,
-} from "@untitledui/icons";
+} from "@untitledui-pro/icons/line";
 import { Badge } from "@/components/base/badges/badges";
 
 const UsedSpaceCard = () => (

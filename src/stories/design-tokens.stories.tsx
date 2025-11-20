@@ -1,4 +1,8 @@
+import type { CSSProperties } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Meta } from "@storybook/react";
+import tokens from "./tokens.json";
+const COLOR_VALUE_MAP: Record<string, string> = tokens.colors;
 
 const meta = {
     title: "Foundations/Design Tokens",
@@ -13,19 +17,105 @@ const meta = {
 export default meta;
 
 // Color palette display component
-const ColorSwatch = ({ name, value, cssVar }: { name: string; value: string; cssVar: string }) => (
+const toHex = (color: string) => {
+    const trimmed = color.trim();
+    if (trimmed.startsWith("#")) {
+        return trimmed.toUpperCase();
+    }
+
+    const rgbMatch = trimmed
+        .replace(/rgb(a)?\(/i, "")
+        .replace(/\)/, "")
+        .split(/[, ]+/)
+        .filter(Boolean)
+        .map((token) => Number(token));
+
+    if (rgbMatch.length >= 3 && rgbMatch.every((num) => !Number.isNaN(num))) {
+        const [r, g, b] = rgbMatch;
+        return `#${[r, g, b].map((channel) => channel.toString(16).padStart(2, "0")).join("").toUpperCase()}`;
+    }
+
+    return trimmed;
+};
+
+const getLuminance = (color: string) => {
+    const trimmed = color.trim();
+    let r = 255,
+        g = 255,
+        b = 255;
+
+    if (trimmed.startsWith("#")) {
+        const hex = trimmed.replace("#", "");
+        if (hex.length === 3) {
+            r = parseInt(hex[0] + hex[0], 16);
+            g = parseInt(hex[1] + hex[1], 16);
+            b = parseInt(hex[2] + hex[2], 16);
+        } else if (hex.length === 6) {
+            r = parseInt(hex.slice(0, 2), 16);
+            g = parseInt(hex.slice(2, 4), 16);
+            b = parseInt(hex.slice(4, 6), 16);
+        }
+    } else if (trimmed.startsWith("rgb")) {
+        const channels = trimmed
+            .replace(/rgb(a)?\(/i, "")
+            .replace(")", "")
+            .split(/[, ]+/)
+            .filter(Boolean)
+            .map((token) => Number(token));
+        if (channels.length >= 3 && channels.every((num) => !Number.isNaN(num))) {
+            [r, g, b] = channels;
+        }
+    }
+
+    const srgb = [r, g, b].map((channel) => {
+        const normalized = channel / 255;
+        return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+    });
+
+    return 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+};
+
+const ColorSwatch = ({ name, value, cssVar }: { name: string; value?: string; cssVar?: string }) => {
+    const srcValue = cssVar ? COLOR_VALUE_MAP[cssVar] ?? value : value;
+    const [resolvedColor, setResolvedColor] = useState(srcValue ?? "#ffffff");
+
+    useEffect(() => {
+        if (!cssVar || typeof window === "undefined") {
+            if (srcValue) {
+                setResolvedColor(srcValue);
+            }
+            return;
+        }
+
+        const computed = getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim();
+        if (computed) {
+            setResolvedColor(computed);
+        } else if (COLOR_VALUE_MAP[cssVar]) {
+            setResolvedColor(COLOR_VALUE_MAP[cssVar]);
+        } else if (value) {
+            setResolvedColor(value);
+        }
+    }, [cssVar, srcValue, value]);
+
+    const hexValue = useMemo(() => toHex(resolvedColor), [resolvedColor]);
+    const isLight = useMemo(() => getLuminance(resolvedColor) > 0.85, [resolvedColor]);
+
+    const swatchStyle: CSSProperties = {
+        backgroundColor: cssVar ? `var(${cssVar})` : resolvedColor,
+        boxShadow: isLight ? "inset 0 0 0 1px rgba(15, 23, 42, 0.15)" : undefined,
+    };
+
+    return (
     <div className="flex flex-col gap-2">
-        <div 
-            className="h-16 w-full rounded-lg border border-gray-200 shadow-sm" 
-            style={{ backgroundColor: value }}
-        />
+            <div className="h-16 w-full rounded-lg border border-gray-200 shadow-sm" style={swatchStyle} />
         <div className="text-xs">
             <div className="font-semibold text-gray-900">{name}</div>
-            <div className="text-gray-500">{value}</div>
-            <div className="font-mono text-gray-400 text-[10px]">{cssVar}</div>
+                <div className="font-mono text-gray-500 text-[11px] uppercase tracking-wide">{hexValue}</div>
+                {cssVar && <div className="font-mono text-gray-400 text-[10px]">{cssVar}</div>}
         </div>
     </div>
-);
+    );
+};
 
 // Typography sample component
 const TypographySample = ({ name, className, description }: { name: string; className: string; description: string }) => (
@@ -41,71 +131,36 @@ const TypographySample = ({ name, className, description }: { name: string; clas
     </div>
 );
 
+const colorGroups = tokens.palettes.map((palette) => ({
+    title: palette.name,
+    description: "",
+    colors: palette.steps.map((step) => ({
+        name: `${palette.name} ${step.step}`,
+        cssVar: step.token,
+    })),
+}));
+
 export const Colors = () => {
-    const brandColors = [
-        { name: "Brand 25", value: "#f5f9ff", cssVar: "--color-brand-25" },
-        { name: "Brand 50", value: "#ebf3ff", cssVar: "--color-brand-50" },
-        { name: "Brand 100", value: "#dbeefe", cssVar: "--color-brand-100" },
-        { name: "Brand 200", value: "#bfe2fe", cssVar: "--color-brand-200" },
-        { name: "Brand 300", value: "#92d1fe", cssVar: "--color-brand-300" },
-        { name: "Brand 400", value: "#5fb7fb", cssVar: "--color-brand-400" },
-        { name: "Brand 500", value: "#3a97f7", cssVar: "--color-brand-500" },
-        { name: "Brand 600", value: "#2f80ed", cssVar: "--color-brand-600" },
-        { name: "Brand 700", value: "#1968d8", cssVar: "--color-brand-700" },
-        { name: "Brand 800", value: "#1251b3", cssVar: "--color-brand-800" },
-        { name: "Brand 900", value: "#0f3d8a", cssVar: "--color-brand-900" },
-        { name: "Brand 950", value: "#0a2754", cssVar: "--color-brand-950" },
-    ];
-
-    const grayColors = [
-        { name: "Gray 25", value: "#fcfcfd", cssVar: "--color-gray-25" },
-        { name: "Gray 50", value: "#f9fafb", cssVar: "--color-gray-50" },
-        { name: "Gray 100", value: "#f2f4f7", cssVar: "--color-gray-100" },
-        { name: "Gray 200", value: "#eaecf0", cssVar: "--color-gray-200" },
-        { name: "Gray 300", value: "#d0d5dd", cssVar: "--color-gray-300" },
-        { name: "Gray 400", value: "#98a2b3", cssVar: "--color-gray-400" },
-        { name: "Gray 500", value: "#667085", cssVar: "--color-gray-500" },
-        { name: "Gray 600", value: "#475467", cssVar: "--color-gray-600" },
-        { name: "Gray 700", value: "#344054", cssVar: "--color-gray-700" },
-        { name: "Gray 800", value: "#1d2939", cssVar: "--color-gray-800" },
-        { name: "Gray 900", value: "#101828", cssVar: "--color-gray-900" },
-        { name: "Gray 950", value: "#0c111d", cssVar: "--color-gray-950" },
-    ];
-
     return (
         <div className="max-w-4xl">
             <h1 className="text-3xl font-semibold mb-4">Color System</h1>
             <p className="text-gray-600 mb-8 text-lg">
-                The Ushur Design System uses a carefully crafted color palette that works seamlessly in both light and dark modes.
-                Colors automatically adapt based on the theme, ensuring proper contrast and accessibility.
+                The Ushur Design System preserves the full Untitled UI palette for parity across components. Brand hues are updated
+                to Royal Blue, while all supporting neutrals and accent palettes remain unchanged.
             </p>
 
             <div className="space-y-12">
-                {/* Brand Colors */}
-                <div>
-                    <h2 className="text-xl font-semibold mb-4">Brand Colors</h2>
-                    <p className="text-gray-600 mb-6">
-                        Our primary brand color is Royal Blue (Brand 600: #2f80ed). The full scale provides flexibility for various UI needs.
-                    </p>
-                    <div className="grid grid-cols-6 gap-4 sm:grid-cols-12">
-                        {brandColors.map((color) => (
-                            <ColorSwatch key={color.name} {...color} />
-                        ))}
+                {colorGroups.map((group) => (
+                    <div key={group.title}>
+                        <h2 className="text-xl font-semibold mb-4">{group.title}</h2>
+                        {group.description && <p className="text-gray-600 mb-6">{group.description}</p>}
+                        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+                            {group.colors.map((color) => (
+                                <ColorSwatch key={`${group.title}-${color.name}`} {...color} />
+                            ))}
+                        </div>
                     </div>
-                </div>
-
-                {/* Gray Colors */}
-                <div>
-                    <h2 className="text-xl font-semibold mb-4">Gray Scale</h2>
-                    <p className="text-gray-600 mb-6">
-                        The gray scale is used for text, borders, backgrounds, and neutral UI elements.
-                    </p>
-                    <div className="grid grid-cols-6 gap-4 sm:grid-cols-12">
-                        {grayColors.map((color) => (
-                            <ColorSwatch key={color.name} {...color} />
-                        ))}
-                    </div>
-                </div>
+                ))}
 
                 {/* Usage Guidelines */}
                 <div>
