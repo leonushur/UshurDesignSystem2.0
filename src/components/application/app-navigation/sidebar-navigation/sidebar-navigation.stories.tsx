@@ -177,6 +177,7 @@ const SECTION_GROUPS: Array<{ label: string; items: NavItemType[] }> = [
 
 const meta = {
     title: "Patterns/Navigation/Sidebar",
+    component: SidebarNavigationSimple,
     parameters: {
         layout: "fullscreen",
     },
