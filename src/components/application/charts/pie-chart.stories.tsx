@@ -34,6 +34,55 @@ export const BasicPieChart: StoryObj<typeof PieChart> = {
     },
 };
 
+export const PieChartXXL: StoryObj<typeof PieChart> = {
+    name: "Pie Chart XXL",
+    args: {
+        data: sampleData,
+        height: 400,
+        outerRadius: 140,
+        showLegend: true,
+        legendPosition: "bottom",
+    },
+};
+
+export const PieChartXS: StoryObj<typeof PieChart> = {
+    name: "Pie Chart XS",
+    args: {
+        data: sampleData,
+        height: 150,
+        outerRadius: 50,
+        showLegend: false,
+    },
+};
+
+export const PieChartSM: StoryObj<typeof PieChart> = {
+    name: "Pie Chart SM",
+    args: {
+        data: sampleData,
+        height: 200,
+        outerRadius: 60,
+        showLegend: false,
+    },
+};
+
+export const PieChartMD: StoryObj<typeof PieChart> = {
+    name: "Pie Chart MD",
+    args: {
+        data: sampleData,
+        height: 250,
+        outerRadius: 80,
+    },
+};
+
+export const PieChartLG: StoryObj<typeof PieChart> = {
+    name: "Pie Chart LG",
+    args: {
+        data: sampleData,
+        height: 320,
+        outerRadius: 100,
+    },
+};
+
 export const PieChartWithLabels: StoryObj<typeof PieChart> = {
     args: {
         data: sampleData,
@@ -56,19 +105,15 @@ export const BasicDonutChart: StoryObj<typeof DonutChart> = {
         <DonutChart
             data={sampleData}
             height={300}
-            centerValue="1,000"
-            centerLabel="Total visits"
         />
     ),
 };
 
-export const DonutChartWithValue: StoryObj<typeof DonutChart> = {
+export const DonutChartWithFormatter: StoryObj<typeof DonutChart> = {
     render: () => (
         <DonutChart
             data={revenueData}
             height={300}
-            centerValue="$100K"
-            centerLabel="Revenue"
             valueFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
         />
     ),
@@ -138,8 +183,6 @@ export const AllChartVariants: StoryObj = {
                         <DonutChart
                             data={sampleData}
                             height={250}
-                            centerValue="1,000"
-                            centerLabel="Total"
                         />
                     </div>
                 </div>
