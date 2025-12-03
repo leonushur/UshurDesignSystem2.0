@@ -5,6 +5,19 @@ description: Comprehensive guide for debugging and fixing failed Vercel/Storyboo
 
 # Vercel Deployment Debugging Guide
 
+## 📍 Project Information
+
+| Property | Value |
+|----------|-------|
+| **Project** | `ushur-design-system` |
+| **Team** | Leon's projects (personal) |
+| **Live URL** | https://ushur-design-system.vercel.app |
+| **Dashboard** | https://vercel.com/leons-projects-7b80d343/ushur-design-system/deployments |
+
+> ⚠️ **Scope**: Only interact with `ushur-design-system`. Do not access other projects.
+
+---
+
 ## 🚨 When Deployment Fails - Quick Reference
 
 ### Step 1: Get the Error
