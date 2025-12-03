@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo, type ReactNode, type KeyboardEvent } from "react";
-import { Search, XClose, ArrowRight } from "@untitledui-pro/icons/line";
+import { SearchLg, XClose, ArrowRight } from "@untitledui-pro/icons/line";
 import { cx } from "@/utils/cx";
 
 export interface CommandItem {
@@ -144,7 +144,7 @@ export const CommandMenu = ({
             >
                 {/* Search input */}
                 <div className="flex items-center gap-3 border-b border-border-secondary px-4 py-3">
-                    <Search className="size-5 text-fg-quaternary" />
+                    <SearchLg className="size-5 text-fg-quaternary" />
                     <input
                         ref={inputRef}
                         type="text"
@@ -278,7 +278,7 @@ export const CommandTrigger = ({
                 className
             )}
         >
-            <Search className="size-4" />
+            <SearchLg className="size-4" />
             <span className="flex-1 text-left">{placeholder}</span>
             <kbd className="rounded bg-bg-secondary px-1.5 py-0.5 text-xs font-medium">
                 {shortcut}

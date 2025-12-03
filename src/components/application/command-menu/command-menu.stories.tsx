@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { 
-    Home02, 
-    Settings01, 
-    User01, 
-    CreditCard01, 
+import {
+    Home02,
+    Settings01,
+    User01,
+    CreditCard01,
     Mail01,
     Calendar,
-    FileText,
+    File01,
     FolderClosed,
     Plus,
     Trash01,
@@ -113,7 +113,7 @@ const sampleItems: CommandItem[] = [
     {
         id: "docs",
         label: "View Documentation",
-        icon: <FileText className="size-4" />,
+        icon: <File01 className="size-4" />,
         group: "Quick Actions",
         onSelect: () => console.log("Docs"),
     },
