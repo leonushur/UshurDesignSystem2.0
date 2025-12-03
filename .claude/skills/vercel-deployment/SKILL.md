@@ -1,150 +1,214 @@
 ---
-name: Vercel Deployment Verification
-description: Provides procedures and checklists for verifying Vercel deployments of Storybook.
+name: Vercel Deployment Debugging
+description: Comprehensive guide for debugging and fixing failed Vercel/Storybook deployments.
 ---
 
-# Vercel Deployment Verification Skill
+# Vercel Deployment Debugging Guide
 
-This skill provides standardized procedures for verifying Vercel deployments.
+## 🚨 When Deployment Fails - Quick Reference
 
-## Pre-Deployment Checklist
+### Step 1: Get the Error
+1. Go to **Vercel Dashboard** → Your Project → **Deployments**
+2. Click the **failed deployment** (red X)
+3. Click **"Build Logs"**
+4. Find the **FIRST error** (ignore cascading errors)
 
-Before deploying, ensure:
-- [ ] All TypeScript errors are resolved (`npm run build`)
-- [ ] Storybook builds successfully (`npm run build-storybook`)
-- [ ] No console errors in local Storybook
-- [ ] All stories render correctly
-- [ ] Environment variables are configured in Vercel
-
-## Vercel CLI Commands
-
+### Step 2: Reproduce Locally
 ```bash
-# Login to Vercel
-npx vercel login
-
-# Link project (first time only)
-npx vercel link
-
-# Deploy preview
-npx vercel
-
-# Deploy to production
-npx vercel --prod
-
-# List recent deployments
-npx vercel ls
-
-# Check deployment logs
-npx vercel logs <deployment-url>
-
-# Inspect a deployment
-npx vercel inspect <deployment-url>
+# Clean slate - exactly like Vercel
+rm -rf node_modules storybook-static
+npm ci
+npm run build-storybook
 ```
 
-## Browser Verification Steps
+### Step 3: Apply the Fix (see below)
 
-### 1. Initial Load Test
-- Navigate to deployment URL
-- Verify page loads within 5 seconds
-- Check for loading spinners completing
-- Verify no blank screens
+---
 
-### 2. Storybook Sidebar
-- Confirm all component categories appear
-- Verify component count matches local
-- Check search functionality works
+## 🔧 Error → Fix Reference
 
-### 3. Component Rendering
-Test these critical components:
-- Buttons (all variants)
-- Forms (inputs, selects)
-- Modals (open/close)
-- Charts (data rendering)
-- Tables (sorting, pagination)
-
-### 4. Theme Testing
-- Toggle between light and dark modes
-- Verify colors update correctly
-- Check for any unstyled elements
-
-### 5. Documentation
-- Verify autodocs pages load
-- Check code snippets render
-- Confirm controls panel works
-
-## Common Deployment Issues
-
-### Build Failures
-
-**Missing Dependencies**
+### Module Not Found
 ```
-Error: Cannot find module 'xyz'
+Error: Cannot find module '@untitledui/xyz'
 ```
-Fix: Add to package.json and redeploy
+**Fix:**
+```bash
+npm install @untitledui/xyz
+```
 
-**TypeScript Errors**
-```
-Type error: Property 'x' does not exist
-```
-Fix: Resolve type errors locally first
+---
 
-**Memory Issues**
+### TypeScript Errors
 ```
-FATAL ERROR: Heap out of memory
+Type error: Property 'X' does not exist on type 'Y'
 ```
-Fix: Add to vercel.json:
+**Fix:**
+```bash
+# Find the file
+npx tsc --noEmit 2>&1 | head -20
+
+# Fix the type error, then verify
+npx tsc --noEmit
+```
+
+---
+
+### MDX/Docs Errors
+```
+Error: Expected a closing tag for `<Component>`
+```
+**Fix:** Check MDX files for:
+- Unclosed JSX tags: `<div>` needs `</div>`
+- Self-closing tags need slash: `<img />` not `<img>`
+- Import statements at top of MDX
+
+---
+
+### Out of Memory
+```
+FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - JavaScript heap out of memory
+```
+**Fix:** Update `package.json`:
 ```json
 {
-  "functions": {
-    "api/**/*.ts": {
-      "memory": 1024
-    }
+  "scripts": {
+    "build-storybook": "NODE_OPTIONS='--max-old-space-size=4096' storybook build"
   }
 }
 ```
 
-### Runtime Issues
+---
 
-**Missing Environment Variables**
-Check Vercel project settings → Environment Variables
-
-**CORS Errors**
-Add appropriate headers in vercel.json
-
-**404 on Routes**
-Ensure rewrites are configured for SPA routing
-
-## Deployment URLs
-
-- **Production**: `https://<project>.vercel.app`
-- **Preview**: `https://<project>-<branch>-<team>.vercel.app`
-- **Specific Deploy**: `https://<deploy-id>.vercel.app`
-
-## Verification Report Template
-
-```markdown
-## Deployment Verification Report
-
-**URL**: [deployment-url]
-**Date**: [date]
-**Status**: ✅ Success / ❌ Failed
-
-### Build
-- Duration: X minutes
-- Size: X MB
-- Errors: None / [list errors]
-
-### Smoke Tests
-- [ ] Initial load < 5s
-- [ ] Sidebar renders
-- [ ] Components load
-- [ ] Theme toggle works
-- [ ] No console errors
-
-### Issues Found
-- [List any issues]
-
-### Screenshots
-- [Attach key screenshots]
+### Storybook Addon Missing
 ```
+Error: Cannot find module '@storybook/addon-docs'
+```
+**Fix:**
+```bash
+npm install @storybook/addon-docs
+```
+
+---
+
+### ESM/CJS Conflicts
+```
+Error: require() of ES Module not supported
+```
+**Fix:** Add to `.storybook/main.ts`:
+```typescript
+viteFinal: async (config) => {
+  config.optimizeDeps = config.optimizeDeps ?? {};
+  config.optimizeDeps.include = [
+    ...(config.optimizeDeps.include ?? []),
+    'problematic-package'
+  ];
+  return config;
+}
+```
+
+---
+
+### Circular Dependencies
+```
+Error: Maximum call stack size exceeded
+```
+**Fix:**
+```bash
+# Find circular imports
+npx madge --circular src/
+
+# Refactor to break the cycle
+```
+
+---
+
+### CSS/Tailwind Errors
+```
+Error: Unknown at rule @tailwind
+```
+**Fix:** Ensure PostCSS config is correct and tailwindcss is installed:
+```bash
+npm install -D tailwindcss postcss autoprefixer
+```
+
+---
+
+### React Version Conflicts
+```
+Error: Invalid hook call. Hooks can only be called inside...
+```
+**Fix:**
+```bash
+# Check for duplicate React
+npm ls react
+
+# If multiple versions, add to package.json:
+"overrides": {
+  "react": "^18.2.0"
+}
+```
+
+---
+
+### Environment Variables
+```
+Error: process.env.NEXT_PUBLIC_X is undefined
+```
+**Fix:**
+1. Go to **Vercel Dashboard** → Project → **Settings** → **Environment Variables**
+2. Add the missing variable
+3. **Redeploy** (env vars need new deploy)
+
+---
+
+## 🔍 Diagnostic Commands
+
+```bash
+# Full diagnostic
+npm run build-storybook 2>&1 | tee build.log
+
+# Check TypeScript
+npx tsc --noEmit
+
+# Check for circular deps
+npx madge --circular src/
+
+# Check bundle size
+npm run build-storybook && du -sh storybook-static/
+
+# List all dependencies
+npm ls --depth=0
+
+# Check peer dependency issues
+npm ls 2>&1 | grep -i "UNMET\|invalid"
+```
+
+---
+
+## 📋 Pre-Push Checklist
+
+Before pushing to trigger a new deploy:
+
+```bash
+# 1. Clean build
+rm -rf node_modules storybook-static
+npm ci
+
+# 2. Type check
+npx tsc --noEmit
+
+# 3. Build Storybook
+npm run build-storybook
+
+# 4. If all pass, push
+git push
+```
+
+---
+
+## 🔗 Useful Links
+
+- **Vercel Build Logs**: `vercel.com/<team>/<project>/deployments`
+- **Vercel Status**: `vercel-status.com`
+- **Storybook Issues**: `github.com/storybookjs/storybook/issues`
 
