@@ -7,4 +7,6 @@ export { PieChart, DonutChart } from "./pie-chart";
 export type { PieChartProps, PieChartDataPoint, DonutChartProps } from "./pie-chart";
 export { ActivityGauge, ActivityGaugeGroup, SemiCircleGauge } from "./activity-gauge";
 export type { ActivityGaugeProps, ActivityGaugeGroupProps, SemiCircleGaugeProps } from "./activity-gauge";
+export { RadarChart } from "./radar-chart";
+export type { RadarChartProps, RadarChartDataPoint, RadarChartSeries } from "./radar-chart";
 

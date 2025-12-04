@@ -1,6 +1,6 @@
 import type { ComponentPropsWithRef, HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
-import { createContext, isValidElement, useContext } from "react";
-import { ArrowDown, ChevronSelectorVertical, Copy01, Edit01, HelpCircle, Trash01 } from "@untitledui-pro/icons/line";
+import { createContext, isValidElement, useContext, useRef, useState } from "react";
+import { ArrowDown, ChevronSelectorVertical, Copy01, Edit01, HelpCircle, Trash01, DotsVertical } from "@untitledui-pro/icons/line";
 import type {
     CellProps as AriaCellProps,
     ColumnProps as AriaColumnProps,
@@ -45,11 +45,42 @@ export const TableRowActionsDropdown = () => (
     </Dropdown.Root>
 );
 
-const TableContext = createContext<{ size: "sm" | "md" }>({ size: "md" });
+interface TableContextValue {
+    size: "sm" | "md";
+    columnWidths: Record<string, number>;
+    setColumnWidth: (columnId: string, width: number) => void;
+    draggedColumn: string | null;
+    setDraggedColumn: (columnId: string | null) => void;
+    dragOverColumn: string | null;
+    setDragOverColumn: (columnId: string | null) => void;
+    enableResize?: boolean;
+    enableReorder?: boolean;
+    onColumnReorder?: (fromId: string, toId: string) => void;
+}
+
+const TableContext = createContext<TableContextValue>({
+    size: "md",
+    columnWidths: {},
+    setColumnWidth: () => {},
+    draggedColumn: null,
+    setDraggedColumn: () => {},
+    dragOverColumn: null,
+    setDragOverColumn: () => {},
+    enableResize: false,
+    enableReorder: false,
+});
 
 const TableCardRoot = ({ children, className, size = "md", ...props }: HTMLAttributes<HTMLDivElement> & { size?: "sm" | "md" }) => {
+    const [columnWidths, setColumnWidthsState] = useState<Record<string, number>>({});
+    const [draggedColumn, setDraggedColumn] = useState<string | null>(null);
+    const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
+
+    const setColumnWidth = (columnId: string, width: number) => {
+        setColumnWidthsState((prev) => ({ ...prev, [columnId]: width }));
+    };
+
     return (
-        <TableContext.Provider value={{ size }}>
+        <TableContext.Provider value={{ size, columnWidths, setColumnWidth, draggedColumn, setDraggedColumn, dragOverColumn, setDragOverColumn }}>
             <div {...props} className={cx("overflow-hidden rounded-xl bg-primary shadow-xs ring-1 ring-secondary", className)}>
                 {children}
             </div>
@@ -103,13 +134,36 @@ const TableCardHeader = ({ title, badge, description, contentTrailing, className
 
 interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"table">, "className" | "slot" | "style"> {
     size?: "sm" | "md";
+    enableResize?: boolean;
+    enableReorder?: boolean;
+    onColumnReorder?: (fromId: string, toId: string) => void;
 }
 
-const TableRoot = ({ className, size = "md", ...props }: TableRootProps) => {
+const TableRoot = ({ className, size = "md", enableResize = false, enableReorder = false, onColumnReorder, ...props }: TableRootProps) => {
     const context = useContext(TableContext);
+    const [columnWidths, setColumnWidthsState] = useState<Record<string, number>>(context.columnWidths || {});
+    const [draggedColumn, setDraggedColumn] = useState<string | null>(null);
+    const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
+
+    const setColumnWidth = (columnId: string, width: number) => {
+        setColumnWidthsState((prev) => ({ ...prev, [columnId]: width }));
+    };
 
     return (
-        <TableContext.Provider value={{ size: context?.size ?? size }}>
+        <TableContext.Provider
+            value={{
+                size: context?.size ?? size,
+                columnWidths,
+                setColumnWidth,
+                draggedColumn,
+                setDraggedColumn,
+                dragOverColumn,
+                setDragOverColumn,
+                enableResize,
+                enableReorder,
+                onColumnReorder,
+            }}
+        >
             <div className="overflow-x-auto">
                 <AriaTable className={(state) => cx("w-full overflow-x-hidden", typeof className === "function" ? className(state) : className)} {...props} />
             </div>
@@ -165,43 +219,140 @@ interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<HTMLTabl
     tooltip?: string;
 }
 
-const TableHead = ({ className, tooltip, label, children, ...props }: TableHeadProps) => {
+const ResizeHandle = ({ columnId }: { columnId: string }) => {
+    const { setColumnWidth } = useContext(TableContext);
+    const startXRef = useRef<number>(0);
+    const startWidthRef = useRef<number>(0);
+    const columnRef = useRef<HTMLElement | null>(null);
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const column = (e.target as HTMLElement).closest("th");
+        if (!column) return;
+
+        columnRef.current = column;
+        startXRef.current = e.clientX;
+        startWidthRef.current = column.offsetWidth;
+
+        const handleMouseMove = (moveEvent: MouseEvent) => {
+            if (!columnRef.current) return;
+            const diff = moveEvent.clientX - startXRef.current;
+            const newWidth = Math.max(50, startWidthRef.current + diff);
+            setColumnWidth(columnId, newWidth);
+        };
+
+        const handleMouseUp = () => {
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+            columnRef.current = null;
+        };
+
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+    };
+
+    return (
+        <div
+            onMouseDown={handleMouseDown}
+            className="absolute right-0 top-0 h-full w-1 cursor-col-resize bg-transparent hover:bg-border-brand active:bg-border-brand"
+            onClick={(e) => e.stopPropagation()}
+        />
+    );
+};
+
+const TableHead = ({ className, tooltip, label, children, id, ...props }: TableHeadProps) => {
     const { selectionBehavior } = useTableOptions();
+    const { enableResize, enableReorder, columnWidths, draggedColumn, setDraggedColumn, dragOverColumn, setDragOverColumn, onColumnReorder } =
+        useContext(TableContext);
+    const columnId = id?.toString() || label || "";
+
+    const handleDragStart = (e: React.DragEvent) => {
+        if (!enableReorder) return;
+        e.dataTransfer.effectAllowed = "move";
+        setDraggedColumn(columnId);
+    };
+
+    const handleDragOver = (e: React.DragEvent) => {
+        if (!enableReorder || !draggedColumn || draggedColumn === columnId) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+        setDragOverColumn(columnId);
+    };
+
+    const handleDragLeave = () => {
+        if (!enableReorder) return;
+        setDragOverColumn(null);
+    };
+
+    const handleDrop = (e: React.DragEvent) => {
+        if (!enableReorder || !draggedColumn || draggedColumn === columnId) return;
+        e.preventDefault();
+        if (onColumnReorder) {
+            onColumnReorder(draggedColumn, columnId);
+        }
+        setDraggedColumn(null);
+        setDragOverColumn(null);
+    };
+
+    const handleDragEnd = () => {
+        setDraggedColumn(null);
+        setDragOverColumn(null);
+    };
+
+    const columnWidth = columnWidths[columnId];
 
     return (
         <AriaColumn
             {...props}
+            id={id}
+            style={columnWidth ? { width: `${columnWidth}px`, minWidth: `${columnWidth}px`, maxWidth: `${columnWidth}px` } : undefined}
             className={(state) =>
                 cx(
                     "relative p-0 px-6 py-2 outline-hidden focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
                     selectionBehavior === "toggle" && "nth-2:pl-3",
                     state.allowsSorting && "cursor-pointer",
+                    enableReorder && "cursor-move",
+                    draggedColumn === columnId && "opacity-50",
+                    dragOverColumn === columnId && "bg-bg-brand_secondary",
                     typeof className === "function" ? className(state) : className,
                 )
             }
         >
             {(state) => (
-                <AriaGroup className="flex items-center gap-1">
-                    <div className="flex items-center gap-1">
-                        {label && <span className="text-xs font-semibold whitespace-nowrap text-quaternary">{label}</span>}
-                        {typeof children === "function" ? children(state) : children}
-                    </div>
+                <div
+                    draggable={enableReorder}
+                    onDragStart={handleDragStart}
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    onDragEnd={handleDragEnd}
+                >
+                    <AriaGroup className="flex items-center gap-1">
+                        {enableReorder && <DotsVertical className="size-3 text-fg-quaternary" />}
+                        <div className="flex items-center gap-1">
+                            {label && <span className="text-xs font-semibold whitespace-nowrap text-quaternary">{label}</span>}
+                            {typeof children === "function" ? children(state) : children}
+                        </div>
 
-                    {tooltip && (
-                        <Tooltip title={tooltip} placement="top">
-                            <TooltipTrigger className="cursor-pointer text-fg-quaternary transition duration-100 ease-linear hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover">
-                                <HelpCircle className="size-4" />
-                            </TooltipTrigger>
-                        </Tooltip>
-                    )}
+                        {tooltip && (
+                            <Tooltip title={tooltip} placement="top">
+                                <TooltipTrigger className="cursor-pointer text-fg-quaternary transition duration-100 ease-linear hover:text-fg-quaternary_hover focus:text-fg-quaternary_hover">
+                                    <HelpCircle className="size-4" />
+                                </TooltipTrigger>
+                            </Tooltip>
+                        )}
 
-                    {state.allowsSorting &&
-                        (state.sortDirection ? (
-                            <ArrowDown className={cx("size-3 stroke-[3px] text-fg-quaternary", state.sortDirection === "ascending" && "rotate-180")} />
-                        ) : (
-                            <ChevronSelectorVertical size={12} strokeWidth={3} className="text-fg-quaternary" />
-                        ))}
-                </AriaGroup>
+                        {state.allowsSorting &&
+                            (state.sortDirection ? (
+                                <ArrowDown className={cx("size-3 stroke-[3px] text-fg-quaternary", state.sortDirection === "ascending" && "rotate-180")} />
+                            ) : (
+                                <ChevronSelectorVertical size={12} strokeWidth={3} className="text-fg-quaternary" />
+                            ))}
+                    </AriaGroup>
+                    {enableResize && <ResizeHandle columnId={columnId} />}
+                </div>
             )}
         </AriaColumn>
     );
@@ -224,7 +375,7 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
             className={(state) =>
                 cx(
                     "relative outline-focus-ring transition-colors after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
-                    size === "sm" ? "h-14" : "h-18",
+                    size === "sm" ? "h-10" : "h-18",
                     highlightSelectedRow && "selected:bg-secondary",
 
                     // Row border—using an "after" pseudo-element to avoid the border taking up space.
@@ -262,7 +413,7 @@ const TableCell = ({ className, children, ...props }: TableCellProps) => {
             className={(state) =>
                 cx(
                     "relative text-sm text-tertiary outline-focus-ring focus-visible:z-1 focus-visible:outline-2 focus-visible:-outline-offset-2",
-                    size === "sm" && "px-5 py-3",
+                    size === "sm" && "px-5 py-2",
                     size === "md" && "px-6 py-4",
 
                     selectionBehavior === "toggle" && "nth-2:pl-3",

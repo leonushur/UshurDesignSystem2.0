@@ -548,3 +548,188 @@ export const TableErrorState: Story = {
         </TableCard.Root>
     ),
 };
+
+export const ResizableColumns: Story = {
+    name: "Resizable Columns",
+    render: () => (
+        <TableCard.Root>
+            <TableCard.Header title="Team members" badge="5 users" description="Drag column edges to resize. Hover over the right edge of each column header to see the resize handle." />
+            <Table aria-label="Team members" enableResize>
+                <Table.Header>
+                    <Table.Head id="name" label="Name" />
+                    <Table.Head id="status" label="Status" />
+                    <Table.Head id="role" label="Role" />
+                    <Table.Head id="email" label="Email" />
+                    <Table.Head id="actions" />
+                </Table.Header>
+                <Table.Body items={users}>
+                    {(item) => (
+                        <Table.Row id={item.id}>
+                            <Table.Cell>
+                                <div className="flex items-center gap-3">
+                                    <Avatar src={item.avatar} alt={item.name} size="sm" />
+                                    <span className="font-medium text-secondary">{item.name}</span>
+                                </div>
+                            </Table.Cell>
+                            <Table.Cell>
+                                <Badge size="sm" color="success" type="pill-color" dot>
+                                    {item.status}
+                                </Badge>
+                            </Table.Cell>
+                            <Table.Cell>{item.role}</Table.Cell>
+                            <Table.Cell>{item.email}</Table.Cell>
+                            <Table.Cell>
+                                <div className="flex justify-end">
+                                    <TableRowActionsDropdown />
+                                </div>
+                            </Table.Cell>
+                        </Table.Row>
+                    )}
+                </Table.Body>
+            </Table>
+        </TableCard.Root>
+    ),
+};
+
+export const ReorderableColumns: Story = {
+    name: "Reorderable Columns",
+    render: () => {
+        const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
+
+        const handleColumnReorder = (fromId: string, toId: string) => {
+            const newOrder = [...columnOrder];
+            const fromIndex = newOrder.indexOf(fromId);
+            const toIndex = newOrder.indexOf(toId);
+            newOrder.splice(fromIndex, 1);
+            newOrder.splice(toIndex, 0, fromId);
+            setColumnOrder(newOrder);
+        };
+
+        const columnComponents = {
+            name: (item: typeof users[0]) => (
+                <Table.Cell>
+                    <div className="flex items-center gap-3">
+                        <Avatar src={item.avatar} alt={item.name} size="sm" />
+                        <span className="font-medium text-secondary">{item.name}</span>
+                    </div>
+                </Table.Cell>
+            ),
+            status: (item: typeof users[0]) => (
+                <Table.Cell>
+                    <Badge size="sm" color="success" type="pill-color" dot>
+                        {item.status}
+                    </Badge>
+                </Table.Cell>
+            ),
+            role: (item: typeof users[0]) => <Table.Cell>{item.role}</Table.Cell>,
+            email: (item: typeof users[0]) => <Table.Cell>{item.email}</Table.Cell>,
+            actions: () => (
+                <Table.Cell>
+                    <div className="flex justify-end">
+                        <TableRowActionsDropdown />
+                    </div>
+                </Table.Cell>
+            ),
+        };
+
+        const columnHeaders = {
+            name: <Table.Head id="name" label="Name" />,
+            status: <Table.Head id="status" label="Status" />,
+            role: <Table.Head id="role" label="Role" />,
+            email: <Table.Head id="email" label="Email" />,
+            actions: <Table.Head id="actions" />,
+        };
+
+        return (
+            <TableCard.Root>
+                <TableCard.Header title="Team members" badge="5 users" description="Drag column headers with the grip icon to reorder columns." />
+                <Table aria-label="Team members" enableReorder onColumnReorder={handleColumnReorder}>
+                    <Table.Header>
+                        {columnOrder.map((colId) => columnHeaders[colId as keyof typeof columnHeaders])}
+                    </Table.Header>
+                    <Table.Body items={users}>
+                        {(item) => (
+                            <Table.Row id={item.id}>
+                                {columnOrder.map((colId) => columnComponents[colId as keyof typeof columnComponents](item))}
+                            </Table.Row>
+                        )}
+                    </Table.Body>
+                </Table>
+            </TableCard.Root>
+        );
+    },
+};
+
+export const SortableResizableReorderableColumns: Story = {
+    name: "All Features Combined",
+    render: () => {
+        const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
+
+        const handleColumnReorder = (fromId: string, toId: string) => {
+            const newOrder = [...columnOrder];
+            const fromIndex = newOrder.indexOf(fromId);
+            const toIndex = newOrder.indexOf(toId);
+            newOrder.splice(fromIndex, 1);
+            newOrder.splice(toIndex, 0, fromId);
+            setColumnOrder(newOrder);
+        };
+
+        const columnComponents = {
+            name: (item: typeof users[0]) => (
+                <Table.Cell>
+                    <div className="flex items-center gap-3">
+                        <Avatar src={item.avatar} alt={item.name} size="sm" />
+                        <span className="font-medium text-secondary">{item.name}</span>
+                    </div>
+                </Table.Cell>
+            ),
+            status: (item: typeof users[0]) => (
+                <Table.Cell>
+                    <Badge size="sm" color="success" type="pill-color" dot>
+                        {item.status}
+                    </Badge>
+                </Table.Cell>
+            ),
+            role: (item: typeof users[0]) => <Table.Cell>{item.role}</Table.Cell>,
+            email: (item: typeof users[0]) => <Table.Cell>{item.email}</Table.Cell>,
+            actions: () => (
+                <Table.Cell>
+                    <div className="flex justify-end">
+                        <TableRowActionsDropdown />
+                    </div>
+                </Table.Cell>
+            ),
+        };
+
+        const columnHeaders = {
+            name: <Table.Head id="name" label="Name" isRowHeader />,
+            status: <Table.Head id="status" label="Status" />,
+            role: <Table.Head id="role" label="Role" />,
+            email: <Table.Head id="email" label="Email" />,
+            actions: <Table.Head id="actions" />,
+        };
+
+        return (
+            <TableCard.Root>
+                <TableCard.Header
+                    title="Team members"
+                    badge="5 users"
+                    description="Columns are sortable (click header), resizable (drag edges), and reorderable (drag with grip icon)."
+                />
+                <Table aria-label="Team members" enableResize enableReorder onColumnReorder={handleColumnReorder} selectionMode="multiple">
+                    <Table.Header>
+                        {columnOrder.map((colId) => columnHeaders[colId as keyof typeof columnHeaders])}
+                    </Table.Header>
+                    <Table.Body items={users}>
+                        {(item) => (
+                            <Table.Row id={item.id}>
+                                {columnOrder.map((colId) => columnComponents[colId as keyof typeof columnComponents](item))}
+                            </Table.Row>
+                        )}
+                    </Table.Body>
+                </Table>
+                <PaginationCardDefault />
+            </TableCard.Root>
+        );
+    },
+};
