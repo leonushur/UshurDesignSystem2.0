@@ -156,7 +156,7 @@ import { Button } from "react-aria-components";
 
 ## Available Agents
 
-Use `/agents` in Claude Code to access specialized agents:
+This project has specialized sub-agents. Use `/agents` to list them.
 
 - **storybook-creator** - Create new components and stories
 - **storybook-tester** - Test components visually and functionally
@@ -164,6 +164,76 @@ Use `/agents` in Claude Code to access specialized agents:
 - **design-system-auditor** - Audit for consistency and compliance
 - **code-reviewer** - Review code quality and best practices
 - **codebase-explorer** - Fast search and navigation
+- **vercel-deployment-verifier** - Debug Vercel deployment failures
+
+## Automatic Agent Dispatch Rules
+
+**IMPORTANT**: When working on this project, automatically dispatch to the appropriate sub-agent based on the task. Do NOT ask the user - just use the agent.
+
+### When to Use Each Agent
+
+| Task Pattern | Agent to Use | Auto-Dispatch |
+|--------------|--------------|---------------|
+| "Create a component", "Add a new component", "Build a [X] component" | `storybook-creator` | ✅ Yes |
+| "Create stories for", "Add stories", "Write Storybook stories" | `storybook-creator` | ✅ Yes |
+| "Test component", "Verify rendering", "Check if [X] works" | `storybook-tester` | ✅ Yes |
+| "Implement from Figma", "Convert Figma design", "Match the Figma" | `figma-implementer` | ✅ Yes |
+| "Audit", "Check consistency", "Review design tokens usage" | `design-system-auditor` | ✅ Yes |
+| "Review code", "Check code quality", "Suggest improvements" | `code-reviewer` | ✅ Yes |
+| "Find where", "Search for", "Explore the codebase" | `codebase-explorer` | ✅ Yes |
+| "Vercel failed", "Deployment error", "Build failed on Vercel" | `vercel-deployment-verifier` | ✅ Yes |
+
+### Dispatch Syntax
+
+When you identify a task that matches an agent's specialty, use:
+
+```
+Task(agent: "agent-name", prompt: "Detailed task description")
+```
+
+### Chaining Agents
+
+For complex tasks, chain multiple agents:
+
+1. **Creating a new component**: 
+   - First: `storybook-creator` to build component + stories
+   - Then: `design-system-auditor` to verify token usage
+   - Finally: `storybook-tester` to verify rendering
+
+2. **Implementing from Figma**:
+   - First: `figma-implementer` to create the component
+   - Then: `storybook-tester` to compare with design
+   - Finally: `code-reviewer` for quality check
+
+3. **Fixing deployment issues**:
+   - First: `vercel-deployment-verifier` to diagnose
+   - Then: Fix the issue
+   - Finally: `storybook-tester` to verify locally
+
+### Example Auto-Dispatch
+
+User says: "Create a new QR code component"
+
+You should automatically:
+```
+Task(agent: "storybook-creator", prompt: "Create a QR code component with the following requirements:
+- Support for different sizes (xs, sm, md, lg, xl)
+- Custom colors
+- Error correction levels
+- Download functionality
+Include comprehensive Storybook stories demonstrating all variants.")
+```
+
+### Post-Creation Verification
+
+After creating any component, automatically run:
+```
+Task(agent: "design-system-auditor", prompt: "Audit the newly created [component-name] for:
+- Design token usage (no hardcoded colors)
+- Accessibility compliance
+- Consistent prop naming
+- Export from index file")
+```
 
 ## Key Configuration Files
 
