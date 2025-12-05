@@ -299,7 +299,7 @@ export const SmallSize: Story = {
         enableReorder: false,
         size: "sm",
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root size="sm">
             <TableCard.Header title="Team members" badge="5 users" description="Compact view for dense tables." />
             <Table aria-label="Team members" size="sm">
@@ -348,7 +348,7 @@ export const DividerLine01: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header title="Invoices" badge="10 results" description="Monitor invoice status across the team." />
             <Table aria-label="Invoices">
@@ -391,7 +391,7 @@ export const DividerLine02: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header
                 title="Files uploaded"
@@ -449,7 +449,7 @@ export const DividerLine03: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header
                 title="Transactions"

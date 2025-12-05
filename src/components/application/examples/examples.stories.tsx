@@ -3,6 +3,7 @@ import { LoginPage, SignUpPage, ForgotPasswordPage, VerificationPage } from "./a
 import { NotFoundPage, ServerErrorPage, MaintenancePage } from "./error-pages";
 import { AnalyticsDashboard, SimpleDashboard, EcommerceDashboard } from "./dashboard-pages";
 import { AccountSettingsPage, NotificationSettingsPage, SecuritySettingsPage, BillingSettingsPage } from "./settings-pages";
+import { HelpCenterPage, DocumentationPage, SupportPage, TutorialsPage, ChangelogPage, StatusPage } from "./informational-pages";
 
 const meta: Meta = {
     title: "Application/Page Examples",
@@ -153,4 +154,36 @@ export const SettingsSecurity: StoryObj = {
 export const SettingsBilling: StoryObj = {
     name: "Settings - Billing",
     render: () => <BillingSettingsPage />,
+};
+
+// Informational Pages 01
+export const InfoHelpCenter: StoryObj = {
+    name: "Info - Help Center",
+    render: () => <HelpCenterPage />,
+};
+
+export const InfoDocumentation: StoryObj = {
+    name: "Info - Documentation",
+    render: () => <DocumentationPage />,
+};
+
+export const InfoSupport: StoryObj = {
+    name: "Info - Support Ticket",
+    render: () => <SupportPage />,
+};
+
+// Informational Pages 02
+export const InfoTutorials: StoryObj = {
+    name: "Info - Video Tutorials",
+    render: () => <TutorialsPage />,
+};
+
+export const InfoChangelog: StoryObj = {
+    name: "Info - Changelog",
+    render: () => <ChangelogPage />,
+};
+
+export const InfoStatus: StoryObj = {
+    name: "Info - Status Page",
+    render: () => <StatusPage />,
 };

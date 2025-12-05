@@ -6,3 +6,5 @@ export { AnalyticsDashboard, SimpleDashboard, EcommerceDashboard } from "./dashb
 export type { AnalyticsDashboardProps, SimpleDashboardProps, EcommerceDashboardProps } from "./dashboard-pages";
 export { AccountSettingsPage, NotificationSettingsPage, SecuritySettingsPage, BillingSettingsPage } from "./settings-pages";
 export type { AccountSettingsPageProps, NotificationSettingsPageProps, SecuritySettingsPageProps, BillingSettingsPageProps } from "./settings-pages";
+export { HelpCenterPage, DocumentationPage, SupportPage, TutorialsPage, ChangelogPage, StatusPage } from "./informational-pages";
+export type { HelpCenterPageProps, DocumentationPageProps, SupportPageProps, TutorialsPageProps, ChangelogPageProps, StatusPageProps } from "./informational-pages";
