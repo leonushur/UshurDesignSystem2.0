@@ -2,6 +2,8 @@
 
 A comprehensive React component library built with modern web technologies for building beautiful, accessible user interfaces. This repository hosts the Ushur Design System component library, powered by the Ushur UI React kit and wired into a Vite + Storybook workflow.
 
+**Repository:** [github.com/leonushur/UshurDesignSystem2.0](https://github.com/leonushur/UshurDesignSystem2.0)
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
