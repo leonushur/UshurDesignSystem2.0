@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { LoginPage, SignUpPage, ForgotPasswordPage, VerificationPage } from "./auth-pages";
 import { NotFoundPage, ServerErrorPage, MaintenancePage } from "./error-pages";
+import { AnalyticsDashboard, SimpleDashboard, EcommerceDashboard } from "./dashboard-pages";
+import { AccountSettingsPage, NotificationSettingsPage, SecuritySettingsPage, BillingSettingsPage } from "./settings-pages";
 
 const meta: Meta = {
     title: "Application/Page Examples",
@@ -116,3 +118,39 @@ export const Custom403: StoryObj = {
     ),
 };
 
+// Dashboard Pages
+export const DashboardAnalytics: StoryObj = {
+    name: "Dashboard - Analytics",
+    render: () => <AnalyticsDashboard />,
+};
+
+export const DashboardSimple: StoryObj = {
+    name: "Dashboard - Project Grid",
+    render: () => <SimpleDashboard />,
+};
+
+export const DashboardEcommerce: StoryObj = {
+    name: "Dashboard - E-commerce",
+    render: () => <EcommerceDashboard storeName="Acme Store" />,
+};
+
+// Settings Pages
+export const SettingsAccount: StoryObj = {
+    name: "Settings - Account",
+    render: () => <AccountSettingsPage />,
+};
+
+export const SettingsNotifications: StoryObj = {
+    name: "Settings - Notifications",
+    render: () => <NotificationSettingsPage />,
+};
+
+export const SettingsSecurity: StoryObj = {
+    name: "Settings - Security",
+    render: () => <SecuritySettingsPage />,
+};
+
+export const SettingsBilling: StoryObj = {
+    name: "Settings - Billing",
+    render: () => <BillingSettingsPage />,
+};

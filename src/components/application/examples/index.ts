@@ -2,4 +2,7 @@ export { LoginPage, SignUpPage, ForgotPasswordPage, VerificationPage } from "./a
 export type { LoginPageProps, SignUpPageProps, ForgotPasswordPageProps, VerificationPageProps } from "./auth-pages";
 export { NotFoundPage, ServerErrorPage, MaintenancePage } from "./error-pages";
 export type { NotFoundPageProps, ServerErrorPageProps, MaintenancePageProps } from "./error-pages";
-
+export { AnalyticsDashboard, SimpleDashboard, EcommerceDashboard } from "./dashboard-pages";
+export type { AnalyticsDashboardProps, SimpleDashboardProps, EcommerceDashboardProps } from "./dashboard-pages";
+export { AccountSettingsPage, NotificationSettingsPage, SecuritySettingsPage, BillingSettingsPage } from "./settings-pages";
+export type { AccountSettingsPageProps, NotificationSettingsPageProps, SecuritySettingsPageProps, BillingSettingsPageProps } from "./settings-pages";

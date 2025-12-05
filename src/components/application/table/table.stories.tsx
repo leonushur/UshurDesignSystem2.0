@@ -18,6 +18,44 @@ const meta: Meta<typeof Table> = {
         layout: "padded",
     },
     tags: ["autodocs"],
+    argTypes: {
+        enableResize: {
+            control: "boolean",
+            description: "Enable column resizing by dragging column edges",
+            table: {
+                defaultValue: { summary: "true" },
+            },
+        },
+        enableReorder: {
+            control: "boolean",
+            description: "Enable column reordering by dragging column headers",
+            table: {
+                defaultValue: { summary: "true" },
+            },
+        },
+        size: {
+            control: "radio",
+            options: ["sm", "md"],
+            description: "Table size (affects row height and padding)",
+            table: {
+                defaultValue: { summary: "md" },
+            },
+        },
+        selectionMode: {
+            control: "radio",
+            options: ["none", "single", "multiple"],
+            description: "Row selection mode",
+            table: {
+                defaultValue: { summary: "none" },
+            },
+        },
+    },
+    args: {
+        enableResize: true,
+        enableReorder: true,
+        size: "md",
+        selectionMode: "none",
+    },
 };
 
 export default meta;
@@ -120,7 +158,7 @@ const AlternatingTable = ({
 }) => (
     <TableCard.Root>
         <TableCard.Header title="Invoices" badge="10 results" description="Alternating fills for readability" />
-        <Table aria-label="Invoices">
+        <Table aria-label="Invoices" enableResize={false} enableReorder={false}>
             <Table.Header>
                 <Table.Head>Invoice</Table.Head>
                 <Table.Head>Date</Table.Head>
@@ -161,48 +199,106 @@ const AlternatingTable = ({
 );
 
 export const Default: Story = {
-    render: () => (
-        <TableCard.Root>
-            <TableCard.Header title="Team members" badge="5 users" description="Manage your team members and their account permissions here." />
-            <Table aria-label="Team members" selectionMode="multiple">
-                <Table.Header>
-                    <Table.Head>Name</Table.Head>
-                    <Table.Head>Status</Table.Head>
-                    <Table.Head>Role</Table.Head>
-                    <Table.Head>Email</Table.Head>
-                    <Table.Head />
-                </Table.Header>
-                <Table.Body items={users}>
-                    {(item) => (
-                        <Table.Row id={item.id}>
-                            <Table.Cell>
-                                <div className="flex items-center gap-3">
-                                    <Avatar src={item.avatar} alt={item.name} size="sm" />
-                                    <span className="font-medium text-secondary">{item.name}</span>
-                                </div>
-                            </Table.Cell>
-                            <Table.Cell>
-                                <Badge size="sm" color="success" type="pill-color" dot>
-                                    {item.status}
-                                </Badge>
-                            </Table.Cell>
-                            <Table.Cell>{item.role}</Table.Cell>
-                            <Table.Cell>{item.email}</Table.Cell>
-                            <Table.Cell>
-                                <div className="flex justify-end">
-                                    <TableRowActionsDropdown />
-                                </div>
-                            </Table.Cell>
-                        </Table.Row>
-                    )}
-                </Table.Body>
-            </Table>
-            <PaginationCardDefault />
-        </TableCard.Root>
-    ),
+    render: (args) => {
+        const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
+
+        const handleColumnReorder = (fromId: string, toId: string) => {
+            const newOrder = [...columnOrder];
+            const fromIndex = newOrder.indexOf(fromId);
+            const toIndex = newOrder.indexOf(toId);
+            newOrder.splice(fromIndex, 1);
+            newOrder.splice(toIndex, 0, fromId);
+            setColumnOrder(newOrder);
+        };
+
+        return (
+            <TableCard.Root size={args.size}>
+                <TableCard.Header
+                    title="Team members"
+                    badge="5 users"
+                    description="Manage your team members and their account permissions here. Use controls to toggle features."
+                />
+                <Table
+                    key={columnOrder.join("-")}
+                    aria-label="Team members"
+                    size={args.size}
+                    enableResize={args.enableResize}
+                    enableReorder={args.enableReorder}
+                    onColumnReorder={handleColumnReorder}
+                    selectionMode={args.selectionMode}
+                >
+                    <Table.Header>
+                        {columnOrder.map((colId) => {
+                            switch (colId) {
+                                case "name":
+                                    return <Table.Head key="name" id="name" label="Name" />;
+                                case "status":
+                                    return <Table.Head key="status" id="status" label="Status" />;
+                                case "role":
+                                    return <Table.Head key="role" id="role" label="Role" />;
+                                case "email":
+                                    return <Table.Head key="email" id="email" label="Email" />;
+                                case "actions":
+                                    return <Table.Head key="actions" id="actions" />;
+                                default:
+                                    return null;
+                            }
+                        })}
+                    </Table.Header>
+                    <Table.Body items={users}>
+                        {(item) => (
+                            <Table.Row id={item.id}>
+                                {columnOrder.map((colId) => {
+                                    switch (colId) {
+                                        case "name":
+                                            return (
+                                                <Table.Cell key="name">
+                                                    <div className="flex items-center gap-3">
+                                                        <Avatar src={item.avatar} alt={item.name} size={args.size === "sm" ? "xs" : "sm"} />
+                                                        <span className="font-medium text-secondary">{item.name}</span>
+                                                    </div>
+                                                </Table.Cell>
+                                            );
+                                        case "status":
+                                            return (
+                                                <Table.Cell key="status">
+                                                    <Badge size={args.size === "sm" ? "xs" : "sm"} color="success" type="pill-color" dot>
+                                                        {item.status}
+                                                    </Badge>
+                                                </Table.Cell>
+                                            );
+                                        case "role":
+                                            return <Table.Cell key="role">{item.role}</Table.Cell>;
+                                        case "email":
+                                            return <Table.Cell key="email">{item.email}</Table.Cell>;
+                                        case "actions":
+                                            return (
+                                                <Table.Cell key="actions">
+                                                    <div className="flex justify-end">
+                                                        <TableRowActionsDropdown />
+                                                    </div>
+                                                </Table.Cell>
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
+                            </Table.Row>
+                        )}
+                    </Table.Body>
+                </Table>
+                <PaginationCardDefault />
+            </TableCard.Root>
+        );
+    },
 };
 
 export const SmallSize: Story = {
+    args: {
+        enableResize: false,
+        enableReorder: false,
+        size: "sm",
+    },
     render: () => (
         <TableCard.Root size="sm">
             <TableCard.Header title="Team members" badge="5 users" description="Compact view for dense tables." />
@@ -248,6 +344,10 @@ export const SmallSize: Story = {
 
 export const DividerLine01: Story = {
     name: "Divider Line 01",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header title="Invoices" badge="10 results" description="Monitor invoice status across the team." />
@@ -287,6 +387,10 @@ export const DividerLine01: Story = {
 
 export const DividerLine02: Story = {
     name: "Divider Line 02",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header
@@ -341,6 +445,10 @@ export const DividerLine02: Story = {
 
 export const DividerLine03: Story = {
     name: "Divider Line 03",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header
@@ -399,6 +507,10 @@ export const DividerLine03: Story = {
 
 export const DividerLine04: Story = {
     name: "Divider Line 04",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header
@@ -446,26 +558,46 @@ export const DividerLine04: Story = {
 
 export const AlternatingFills01: Story = {
     name: "Alternating Fills 01",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => <AlternatingTable highlight="rows" />,
 };
 
 export const AlternatingFills02: Story = {
     name: "Alternating Fills 02",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => <AlternatingTable highlight="cols" />,
 };
 
 export const AlternatingFills03: Story = {
     name: "Alternating Fills 03",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => <AlternatingTable highlight="rows" showFooter={false} />,
 };
 
 export const AlternatingFills04: Story = {
     name: "Alternating Fills 04",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => <AlternatingTable highlight="cols" showFooter={false} />,
 };
 
 export const NoVendorsFound: Story = {
     name: "No vendors found",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header
@@ -497,6 +629,10 @@ export const NoVendorsFound: Story = {
 
 export const StartByUploadingFile: Story = {
     name: "Start by uploading file",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header
@@ -524,6 +660,10 @@ export const StartByUploadingFile: Story = {
 
 export const TableErrorState: Story = {
     name: "Something went wrong",
+    args: {
+        enableResize: false,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header
@@ -551,6 +691,10 @@ export const TableErrorState: Story = {
 
 export const ResizableColumns: Story = {
     name: "Resizable Columns",
+    args: {
+        enableResize: true,
+        enableReorder: false,
+    },
     render: () => (
         <TableCard.Root>
             <TableCard.Header title="Team members" badge="5 users" description="Drag column edges to resize. Hover over the right edge of each column header to see the resize handle." />
@@ -593,6 +737,10 @@ export const ResizableColumns: Story = {
 
 export const ReorderableColumns: Story = {
     name: "Reorderable Columns",
+    args: {
+        enableResize: false,
+        enableReorder: true,
+    },
     render: () => {
         const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
 
@@ -605,52 +753,66 @@ export const ReorderableColumns: Story = {
             setColumnOrder(newOrder);
         };
 
-        const columnComponents = {
-            name: (item: typeof users[0]) => (
-                <Table.Cell>
-                    <div className="flex items-center gap-3">
-                        <Avatar src={item.avatar} alt={item.name} size="sm" />
-                        <span className="font-medium text-secondary">{item.name}</span>
-                    </div>
-                </Table.Cell>
-            ),
-            status: (item: typeof users[0]) => (
-                <Table.Cell>
-                    <Badge size="sm" color="success" type="pill-color" dot>
-                        {item.status}
-                    </Badge>
-                </Table.Cell>
-            ),
-            role: (item: typeof users[0]) => <Table.Cell>{item.role}</Table.Cell>,
-            email: (item: typeof users[0]) => <Table.Cell>{item.email}</Table.Cell>,
-            actions: () => (
-                <Table.Cell>
-                    <div className="flex justify-end">
-                        <TableRowActionsDropdown />
-                    </div>
-                </Table.Cell>
-            ),
-        };
-
-        const columnHeaders = {
-            name: <Table.Head id="name" label="Name" />,
-            status: <Table.Head id="status" label="Status" />,
-            role: <Table.Head id="role" label="Role" />,
-            email: <Table.Head id="email" label="Email" />,
-            actions: <Table.Head id="actions" />,
-        };
-
         return (
             <TableCard.Root>
                 <TableCard.Header title="Team members" badge="5 users" description="Drag column headers with the grip icon to reorder columns." />
-                <Table aria-label="Team members" enableReorder onColumnReorder={handleColumnReorder}>
+                <Table key={columnOrder.join("-")} aria-label="Team members" enableReorder onColumnReorder={handleColumnReorder}>
                     <Table.Header>
-                        {columnOrder.map((colId) => columnHeaders[colId as keyof typeof columnHeaders])}
+                        {columnOrder.map((colId) => {
+                            switch (colId) {
+                                case "name":
+                                    return <Table.Head key="name" id="name" label="Name" />;
+                                case "status":
+                                    return <Table.Head key="status" id="status" label="Status" />;
+                                case "role":
+                                    return <Table.Head key="role" id="role" label="Role" />;
+                                case "email":
+                                    return <Table.Head key="email" id="email" label="Email" />;
+                                case "actions":
+                                    return <Table.Head key="actions" id="actions" />;
+                                default:
+                                    return null;
+                            }
+                        })}
                     </Table.Header>
                     <Table.Body items={users}>
                         {(item) => (
                             <Table.Row id={item.id}>
-                                {columnOrder.map((colId) => columnComponents[colId as keyof typeof columnComponents](item))}
+                                {columnOrder.map((colId) => {
+                                    switch (colId) {
+                                        case "name":
+                                            return (
+                                                <Table.Cell key="name">
+                                                    <div className="flex items-center gap-3">
+                                                        <Avatar src={item.avatar} alt={item.name} size="sm" />
+                                                        <span className="font-medium text-secondary">{item.name}</span>
+                                                    </div>
+                                                </Table.Cell>
+                                            );
+                                        case "status":
+                                            return (
+                                                <Table.Cell key="status">
+                                                    <Badge size="sm" color="success" type="pill-color" dot>
+                                                        {item.status}
+                                                    </Badge>
+                                                </Table.Cell>
+                                            );
+                                        case "role":
+                                            return <Table.Cell key="role">{item.role}</Table.Cell>;
+                                        case "email":
+                                            return <Table.Cell key="email">{item.email}</Table.Cell>;
+                                        case "actions":
+                                            return (
+                                                <Table.Cell key="actions">
+                                                    <div className="flex justify-end">
+                                                        <TableRowActionsDropdown />
+                                                    </div>
+                                                </Table.Cell>
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
                             </Table.Row>
                         )}
                     </Table.Body>
@@ -662,6 +824,11 @@ export const ReorderableColumns: Story = {
 
 export const SortableResizableReorderableColumns: Story = {
     name: "All Features Combined",
+    args: {
+        enableResize: true,
+        enableReorder: true,
+        selectionMode: "multiple",
+    },
     render: () => {
         const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
 
@@ -674,41 +841,6 @@ export const SortableResizableReorderableColumns: Story = {
             setColumnOrder(newOrder);
         };
 
-        const columnComponents = {
-            name: (item: typeof users[0]) => (
-                <Table.Cell>
-                    <div className="flex items-center gap-3">
-                        <Avatar src={item.avatar} alt={item.name} size="sm" />
-                        <span className="font-medium text-secondary">{item.name}</span>
-                    </div>
-                </Table.Cell>
-            ),
-            status: (item: typeof users[0]) => (
-                <Table.Cell>
-                    <Badge size="sm" color="success" type="pill-color" dot>
-                        {item.status}
-                    </Badge>
-                </Table.Cell>
-            ),
-            role: (item: typeof users[0]) => <Table.Cell>{item.role}</Table.Cell>,
-            email: (item: typeof users[0]) => <Table.Cell>{item.email}</Table.Cell>,
-            actions: () => (
-                <Table.Cell>
-                    <div className="flex justify-end">
-                        <TableRowActionsDropdown />
-                    </div>
-                </Table.Cell>
-            ),
-        };
-
-        const columnHeaders = {
-            name: <Table.Head id="name" label="Name" isRowHeader />,
-            status: <Table.Head id="status" label="Status" />,
-            role: <Table.Head id="role" label="Role" />,
-            email: <Table.Head id="email" label="Email" />,
-            actions: <Table.Head id="actions" />,
-        };
-
         return (
             <TableCard.Root>
                 <TableCard.Header
@@ -716,14 +848,63 @@ export const SortableResizableReorderableColumns: Story = {
                     badge="5 users"
                     description="Columns are sortable (click header), resizable (drag edges), and reorderable (drag with grip icon)."
                 />
-                <Table aria-label="Team members" enableResize enableReorder onColumnReorder={handleColumnReorder} selectionMode="multiple">
+                <Table key={columnOrder.join("-")} aria-label="Team members" enableResize enableReorder onColumnReorder={handleColumnReorder} selectionMode="multiple">
                     <Table.Header>
-                        {columnOrder.map((colId) => columnHeaders[colId as keyof typeof columnHeaders])}
+                        {columnOrder.map((colId) => {
+                            switch (colId) {
+                                case "name":
+                                    return <Table.Head key="name" id="name" label="Name" isRowHeader />;
+                                case "status":
+                                    return <Table.Head key="status" id="status" label="Status" />;
+                                case "role":
+                                    return <Table.Head key="role" id="role" label="Role" />;
+                                case "email":
+                                    return <Table.Head key="email" id="email" label="Email" />;
+                                case "actions":
+                                    return <Table.Head key="actions" id="actions" />;
+                                default:
+                                    return null;
+                            }
+                        })}
                     </Table.Header>
                     <Table.Body items={users}>
                         {(item) => (
                             <Table.Row id={item.id}>
-                                {columnOrder.map((colId) => columnComponents[colId as keyof typeof columnComponents](item))}
+                                {columnOrder.map((colId) => {
+                                    switch (colId) {
+                                        case "name":
+                                            return (
+                                                <Table.Cell key="name">
+                                                    <div className="flex items-center gap-3">
+                                                        <Avatar src={item.avatar} alt={item.name} size="sm" />
+                                                        <span className="font-medium text-secondary">{item.name}</span>
+                                                    </div>
+                                                </Table.Cell>
+                                            );
+                                        case "status":
+                                            return (
+                                                <Table.Cell key="status">
+                                                    <Badge size="sm" color="success" type="pill-color" dot>
+                                                        {item.status}
+                                                    </Badge>
+                                                </Table.Cell>
+                                            );
+                                        case "role":
+                                            return <Table.Cell key="role">{item.role}</Table.Cell>;
+                                        case "email":
+                                            return <Table.Cell key="email">{item.email}</Table.Cell>;
+                                        case "actions":
+                                            return (
+                                                <Table.Cell key="actions">
+                                                    <div className="flex justify-end">
+                                                        <TableRowActionsDropdown />
+                                                    </div>
+                                                </Table.Cell>
+                                            );
+                                        default:
+                                            return null;
+                                    }
+                                })}
                             </Table.Row>
                         )}
                     </Table.Body>

@@ -20,18 +20,18 @@ This document tracks which UntitledUI components are implemented in the Ushur De
 | Inputs | ✅ | `base/input/` |
 | Textarea | ✅ | `base/textarea/` |
 | Verification code inputs | ✅ | `base/verification-code-input/` |
-| Text editors | ⏳ | *Planned* |
+| Text editors | ✅ | `base/text-editor/` |
 | Toggles | ✅ | `base/toggle/` |
 | Checkboxes | ✅ | `base/checkbox/` |
 | Radio buttons | ✅ | `base/radio-buttons/` |
-| Radio groups | ⏳ | *Planned* |
+| Radio groups | ✅ | `base/radio-buttons/radio-groups.tsx` |
 | Avatars | ✅ | `base/avatar/` |
 | Tooltips | ✅ | `base/tooltip/` |
 | Progress indicators | ✅ | `base/progress-indicators/` |
 | Sliders | ✅ | `base/slider/` |
-| Video players | ⏳ | *Planned* |
-| Credit cards | ⏳ | *Planned* |
-| QR codes | ⏳ | *Planned* |
+| Video players | ✅ | `application/video-player/` |
+| Credit cards | ✅ | `application/credit-card-display/` |
+| QR codes | ✅ | `application/qr-code/` |
 | Illustrations | ✅ | `shared-assets/illustrations/` |
 | Rating badge and stars | ✅ | `foundations/rating-stars.tsx` |
 
@@ -50,15 +50,15 @@ This document tracks which UntitledUI components are implemented in the Ushur De
 | Line & bar charts | ✅ | `application/charts/` |
 | Activity gauges | ✅ | `application/charts/activity-gauge.tsx` |
 | Pie charts | ✅ | `application/charts/pie-chart.tsx` |
-| Radar charts | ⏳ | *Planned* |
+| Radar charts | ✅ | `application/charts/radar-chart.tsx` |
 | Metrics | ✅ | `application/metrics/` |
 | Slideout menus | ✅ | `application/slideout-menus/` |
 | Inline CTAs | ✅ | `application/inline-cta/` |
 | Paginations | ✅ | `application/pagination/` |
-| Carousels | ⏳ | *Planned* |
+| Carousels | ✅ | `application/carousel/` |
 | Progress steps | ✅ | `application/progress-steps/` |
 | Activity feeds | ✅ | `application/activity-feeds/` |
-| Messaging | ⏳ | *Planned* |
+| Messaging | ✅ | `application/messaging/` |
 | Tabs | ✅ | `application/tabs/` |
 | Tables | ✅ | `application/table/` |
 | Breadcrumbs | ✅ | `application/breadcrumbs/` |
@@ -76,10 +76,10 @@ This document tracks which UntitledUI components are implemented in the Ushur De
 
 | Component | Status | Location |
 |-----------|--------|----------|
-| Dashboards 01 | ⏳ | *Planned* |
-| Dashboards 02 | ⏳ | *Planned* |
-| Settings pages 01 | ⏳ | *Planned* |
-| Settings pages 02 | ⏳ | *Planned* |
+| Dashboards 01 | ✅ | `application/examples/dashboard-pages.tsx` |
+| Dashboards 02 | ✅ | `application/examples/dashboard-pages.tsx` |
+| Settings pages 01 | ✅ | `application/examples/settings-pages.tsx` |
+| Settings pages 02 | ✅ | `application/examples/settings-pages.tsx` |
 | Informational pages 01 | ⏳ | *Planned* |
 | Informational pages 02 | ⏳ | *Planned* |
 
@@ -94,7 +94,7 @@ This document tracks which UntitledUI components are implemented in the Ushur De
 | 404 pages | ✅ | `application/examples/error-pages.tsx` |
 | 500 pages | ✅ | `application/examples/error-pages.tsx` |
 | Maintenance pages | ✅ | `application/examples/error-pages.tsx` |
-| Email templates | ⏳ | *Planned* |
+| Email templates | ✅ | `marketing/email-templates/` |
 
 ## Marketing Components
 
@@ -136,27 +136,17 @@ This document tracks which UntitledUI components are implemented in the Ushur De
 
 ## Summary
 
-### Implemented: ~70 components ✅
-### Planned: ~12 components ⏳
+### Implemented: ~85 components ✅
+### Planned: ~2 components ⏳
 
 ### Coverage by Category:
-- **Base Components**: 90% complete
-- **Application UI Components**: 95% complete
-- **Page Examples**: 80% complete
+- **Base Components**: 100% complete
+- **Application UI Components**: 100% complete
+- **Page Examples**: 97% complete
 - **Marketing Components**: 100% complete
 
-### Remaining Items (Lower Priority):
-- Text editors
-- Radio groups (styled)
-- Video players
-- Credit cards
-- QR codes
-- Radar charts
-- Carousels
-- Messaging components
-- Dashboard examples
-- Settings page examples
-- Email templates
+### Remaining Items:
+- Informational pages (full page layouts)
 
 ---
 
@@ -177,3 +167,15 @@ This document tracks which UntitledUI components are implemented in the Ushur De
 13. **Code Snippets** - Syntax-highlighted code blocks
 14. **Auth Pages** - Login, signup, password reset, verification
 15. **Error Pages** - 404, 500, maintenance pages
+16. **Radar Charts** - Spider/radar charts with multi-series support
+17. **Credit Card Display** - Beautiful card visualization with brand logos
+18. **QR Code** - QR code generator with customizable colors/sizes
+19. **Carousel** - Image/content carousel with Motion animations
+20. **Messaging** - Chat bubbles, message list, and input components
+21. **Video Player** - Custom HTML5 video player with controls
+22. **Table Enhancements** - Resizable and reorderable columns
+23. **Text Editors** - Rich text editor with Tiptap (WYSIWYG)
+24. **Radio Groups** - Card-style, tile, and list radio selection groups
+25. **Dashboard Pages** - Analytics, project grid, and e-commerce dashboards
+26. **Settings Pages** - Account, notifications, security, and billing settings
+27. **Email Templates** - Welcome, password reset, invoice, newsletter, order confirmation

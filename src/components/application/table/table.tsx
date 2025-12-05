@@ -1,5 +1,5 @@
 import type { ComponentPropsWithRef, HTMLAttributes, ReactNode, Ref, TdHTMLAttributes, ThHTMLAttributes } from "react";
-import { createContext, isValidElement, useContext, useRef, useState } from "react";
+import { createContext, isValidElement, useContext, useId, useRef, useState } from "react";
 import { ArrowDown, ChevronSelectorVertical, Copy01, Edit01, HelpCircle, Trash01, DotsVertical } from "@untitledui-pro/icons/line";
 import type {
     CellProps as AriaCellProps,
@@ -71,20 +71,24 @@ const TableContext = createContext<TableContextValue>({
 });
 
 const TableCardRoot = ({ children, className, size = "md", ...props }: HTMLAttributes<HTMLDivElement> & { size?: "sm" | "md" }) => {
-    const [columnWidths, setColumnWidthsState] = useState<Record<string, number>>({});
-    const [draggedColumn, setDraggedColumn] = useState<string | null>(null);
-    const [dragOverColumn, setDragOverColumn] = useState<string | null>(null);
-
-    const setColumnWidth = (columnId: string, width: number) => {
-        setColumnWidthsState((prev) => ({ ...prev, [columnId]: width }));
-    };
-
     return (
-        <TableContext.Provider value={{ size, columnWidths, setColumnWidth, draggedColumn, setDraggedColumn, dragOverColumn, setDragOverColumn }}>
-            <div {...props} className={cx("overflow-hidden rounded-xl bg-primary shadow-xs ring-1 ring-secondary", className)}>
+        <div {...props} className={cx("overflow-hidden rounded-xl bg-primary shadow-xs ring-1 ring-secondary", className)}>
+            <TableContext.Provider
+                value={{
+                    size,
+                    columnWidths: {},
+                    setColumnWidth: () => {},
+                    draggedColumn: null,
+                    setDraggedColumn: () => {},
+                    dragOverColumn: null,
+                    setDragOverColumn: () => {},
+                    enableResize: false,
+                    enableReorder: false,
+                }}
+            >
                 {children}
-            </div>
-        </TableContext.Provider>
+            </TableContext.Provider>
+        </div>
     );
 };
 
@@ -266,7 +270,8 @@ const TableHead = ({ className, tooltip, label, children, id, ...props }: TableH
     const { selectionBehavior } = useTableOptions();
     const { enableResize, enableReorder, columnWidths, draggedColumn, setDraggedColumn, dragOverColumn, setDragOverColumn, onColumnReorder } =
         useContext(TableContext);
-    const columnId = id?.toString() || label || "";
+    const generatedId = useId();
+    const columnId = id?.toString() || label || generatedId;
 
     const handleDragStart = (e: React.DragEvent) => {
         if (!enableReorder) return;
@@ -281,9 +286,13 @@ const TableHead = ({ className, tooltip, label, children, id, ...props }: TableH
         setDragOverColumn(columnId);
     };
 
-    const handleDragLeave = () => {
+    const handleDragLeave = (e: React.DragEvent) => {
         if (!enableReorder) return;
-        setDragOverColumn(null);
+        // Only clear if we're actually leaving the column element
+        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+        if (e.clientX < rect.left || e.clientX >= rect.right || e.clientY < rect.top || e.clientY >= rect.bottom) {
+            setDragOverColumn(null);
+        }
     };
 
     const handleDrop = (e: React.DragEvent) => {
@@ -310,12 +319,12 @@ const TableHead = ({ className, tooltip, label, children, id, ...props }: TableH
             style={columnWidth ? { width: `${columnWidth}px`, minWidth: `${columnWidth}px`, maxWidth: `${columnWidth}px` } : undefined}
             className={(state) =>
                 cx(
-                    "relative p-0 px-6 py-2 outline-hidden focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
+                    "relative p-0 px-6 py-2 outline-hidden transition-all duration-200 ease-in-out focus-visible:z-1 focus-visible:ring-2 focus-visible:ring-focus-ring focus-visible:ring-offset-bg-primary focus-visible:ring-inset",
                     selectionBehavior === "toggle" && "nth-2:pl-3",
                     state.allowsSorting && "cursor-pointer",
                     enableReorder && "cursor-move",
-                    draggedColumn === columnId && "opacity-50",
-                    dragOverColumn === columnId && "bg-bg-brand_secondary",
+                    draggedColumn === columnId && "opacity-40",
+                    dragOverColumn === columnId && "before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-brand-solid before:shadow-lg",
                     typeof className === "function" ? className(state) : className,
                 )
             }
@@ -374,7 +383,7 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
             {...props}
             className={(state) =>
                 cx(
-                    "relative outline-focus-ring transition-colors after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
+                    "relative outline-focus-ring transition-all duration-200 ease-in-out after:pointer-events-none hover:bg-secondary focus-visible:outline-2 focus-visible:-outline-offset-2",
                     size === "sm" ? "h-10" : "h-18",
                     highlightSelectedRow && "selected:bg-secondary",
 
@@ -412,7 +421,7 @@ const TableCell = ({ className, children, ...props }: TableCellProps) => {
             {...props}
             className={(state) =>
                 cx(
-                    "relative text-sm text-tertiary outline-focus-ring focus-visible:z-1 focus-visible:outline-2 focus-visible:-outline-offset-2",
+                    "relative text-sm text-tertiary outline-focus-ring transition-all duration-200 ease-in-out focus-visible:z-1 focus-visible:outline-2 focus-visible:-outline-offset-2",
                     size === "sm" && "px-5 py-2",
                     size === "md" && "px-6 py-4",
 
