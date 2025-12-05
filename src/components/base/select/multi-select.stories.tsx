@@ -37,7 +37,7 @@ const Template = (args: Story["args"]) => {
             items={people}
             shortcut
             label="Collaborators"
-            placeholder="Search teammates"
+            placeholder="SearchMd teammates"
         >
             {(item) => (
                 <MultiSelect.Item key={item.id} id={item.id} textValue={item.label} supportingText={item.supportingText}>

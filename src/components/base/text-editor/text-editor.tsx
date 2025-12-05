@@ -14,16 +14,16 @@ import {
     Underline01,
     Strikethrough01,
     List,
-    ListNumbered01,
-    Quote,
+    Hash01,
+    MessageTextSquare01,
     LinkExternal01,
     AlignLeft01,
-    AlignCenter01,
+    AlignCenter,
     AlignRight01,
-    Undo,
-    Redo,
+    ReverseLeft,
+    ReverseRight,
     Code02,
-    Highlighter,
+    Brush02,
     Minus,
     Type01,
 } from "@untitledui-pro/icons/line";
@@ -138,7 +138,7 @@ const EditorToolbar = ({
 
             {showHighlight && (
                 <ToolbarButton
-                    icon={<Highlighter className="size-4" />}
+                    icon={<Brush02 className="size-4" />}
                     isActive={editor.isActive("highlight")}
                     onClick={() => editor.chain().focus().toggleHighlight().run()}
                     title="Highlight"
@@ -185,7 +185,7 @@ const EditorToolbar = ({
                         title="Align left"
                     />
                     <ToolbarButton
-                        icon={<AlignCenter01 className="size-4" />}
+                        icon={<AlignCenter className="size-4" />}
                         isActive={editor.isActive({ textAlign: "center" })}
                         onClick={() => editor.chain().focus().setTextAlign("center").run()}
                         title="Align center"
@@ -210,7 +210,7 @@ const EditorToolbar = ({
                         title="Bullet list"
                     />
                     <ToolbarButton
-                        icon={<ListNumbered01 className="size-4" />}
+                        icon={<Hash01 className="size-4" />}
                         isActive={editor.isActive("orderedList")}
                         onClick={() => editor.chain().focus().toggleOrderedList().run()}
                         title="Numbered list"
@@ -220,7 +220,7 @@ const EditorToolbar = ({
 
             {showBlockquote && (
                 <ToolbarButton
-                    icon={<Quote className="size-4" />}
+                    icon={<MessageTextSquare01 className="size-4" />}
                     isActive={editor.isActive("blockquote")}
                     onClick={() => editor.chain().focus().toggleBlockquote().run()}
                     title="Blockquote"
@@ -248,13 +248,13 @@ const EditorToolbar = ({
             {showHistory && (
                 <>
                     <ToolbarButton
-                        icon={<Undo className="size-4" />}
+                        icon={<ReverseLeft className="size-4" />}
                         onClick={() => editor.chain().focus().undo().run()}
                         disabled={!editor.can().undo()}
                         title="Undo"
                     />
                     <ToolbarButton
-                        icon={<Redo className="size-4" />}
+                        icon={<ReverseRight className="size-4" />}
                         onClick={() => editor.chain().focus().redo().run()}
                         disabled={!editor.can().redo()}
                         title="Redo"

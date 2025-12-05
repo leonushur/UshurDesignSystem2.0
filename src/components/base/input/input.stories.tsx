@@ -32,7 +32,7 @@ export const Default: Story = {};
 export const WithIcon: Story = {
     args: {
         label: "Search",
-        placeholder: "Search documentation",
+        placeholder: "SearchMd documentation",
         icon: SearchLg,
     },
 };

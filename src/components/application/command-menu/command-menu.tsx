@@ -40,7 +40,7 @@ export const CommandMenu = ({
     isOpen,
     onClose,
     items,
-    placeholder = "Search commands...",
+    placeholder = "SearchMd commands...",
     emptyText = "No results found",
     className,
 }: CommandMenuProps) => {
@@ -49,7 +49,7 @@ export const CommandMenu = ({
     const inputRef = useRef<HTMLInputElement>(null);
     const listRef = useRef<HTMLDivElement>(null);
 
-    // Filter items based on query
+    // FilterLines items based on query
     const filteredItems = useMemo(() => {
         if (!query) return items;
         const lowerQuery = query.toLowerCase();
@@ -142,7 +142,7 @@ export const CommandMenu = ({
                 role="dialog"
                 aria-modal="true"
             >
-                {/* Search input */}
+                {/* SearchMd input */}
                 <div className="flex items-center gap-3 border-b border-border-secondary px-4 py-3">
                     <SearchLg className="size-5 text-fg-quaternary" />
                     <input

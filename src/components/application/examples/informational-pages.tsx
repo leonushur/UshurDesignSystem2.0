@@ -1,12 +1,12 @@
 import { type ReactNode, useState } from "react";
 import { cx } from "@/utils/cx";
 import {
-    Search,
-    Book01,
+    SearchMd,
+    BookClosed,
     HelpCircle,
-    FileText,
-    Video01,
-    MessageChatCircle,
+    File02,
+    VideoRecorder,
+    MessageCircle02,
     ChevronRight,
     ChevronDown,
     Home02,
@@ -142,18 +142,18 @@ export const HelpCenterPage = ({ companyName = "Untitled UI", logo }: HelpCenter
                 </div>
             </header>
 
-            {/* Hero Search */}
+            {/* Hero SearchMd */}
             <div className="bg-bg-primary py-16">
                 <div className="mx-auto max-w-2xl px-6 text-center">
                     <h1 className="mb-4 text-3xl font-semibold text-fg-primary">How can we help you?</h1>
                     <p className="mb-8 text-fg-tertiary">
-                        Search our knowledge base or browse categories below
+                        SearchMd our knowledge base or browse categories below
                     </p>
                     <div className="relative">
-                        <Search className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-fg-quaternary" />
+                        <SearchMd className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-fg-quaternary" />
                         <input
                             type="text"
-                            placeholder="Search for articles..."
+                            placeholder="SearchMd for articles..."
                             className="w-full rounded-xl border border-border-primary bg-bg-primary py-4 pl-12 pr-4 text-fg-primary shadow-sm placeholder:text-fg-placeholder focus:border-border-brand focus:outline-none focus:ring-2 focus:ring-focus-ring"
                         />
                     </div>
@@ -223,7 +223,7 @@ export const HelpCenterPage = ({ companyName = "Untitled UI", logo }: HelpCenter
                                 className="flex items-center justify-between rounded-lg border border-border-primary bg-bg-primary p-4 transition-colors hover:border-border-brand hover:bg-bg-secondary_hover"
                             >
                                 <div className="flex items-center gap-3">
-                                    <FileText className="size-5 text-fg-quaternary" />
+                                    <File02 className="size-5 text-fg-quaternary" />
                                     <span className="font-medium text-fg-primary">{article.title}</span>
                                 </div>
                                 <span className="text-sm text-fg-quaternary">{article.views}</span>
@@ -245,7 +245,7 @@ export const HelpCenterPage = ({ companyName = "Untitled UI", logo }: HelpCenter
                             href="#"
                             className="flex items-center gap-2 rounded-lg border border-border-primary bg-bg-primary px-4 py-2 text-sm font-medium text-fg-secondary hover:bg-bg-secondary_hover"
                         >
-                            <MessageChatCircle className="size-4" />
+                            <MessageCircle02 className="size-4" />
                             Start a chat
                         </a>
                         <a
@@ -304,10 +304,10 @@ export const DocumentationPage = ({ companyName = "Untitled UI", logo }: Documen
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-fg-quaternary" />
+                            <SearchMd className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-fg-quaternary" />
                             <input
                                 type="text"
-                                placeholder="Search docs..."
+                                placeholder="SearchMd docs..."
                                 className="h-9 w-64 rounded-lg border border-border-primary bg-bg-secondary pl-9 pr-3 text-sm placeholder:text-fg-placeholder focus:border-border-brand focus:outline-none focus:ring-2 focus:ring-focus-ring"
                             />
                             <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded border border-border-secondary bg-bg-primary px-1.5 text-xs text-fg-quaternary">
@@ -350,7 +350,7 @@ export const DocumentationPage = ({ companyName = "Untitled UI", logo }: Documen
                     />
                     <SidebarCategory
                         title="Components"
-                        icon={<Book01 className="size-4" />}
+                        icon={<BookClosed className="size-4" />}
                         items={[
                             { label: "Buttons", href: "#" },
                             { label: "Forms", href: "#" },
@@ -360,7 +360,7 @@ export const DocumentationPage = ({ companyName = "Untitled UI", logo }: Documen
                     />
                     <SidebarCategory
                         title="API Reference"
-                        icon={<FileText className="size-4" />}
+                        icon={<File02 className="size-4" />}
                         items={[
                             { label: "REST API", href: "#" },
                             { label: "GraphQL", href: "#" },
@@ -629,7 +629,7 @@ export const SupportPage = ({ companyName = "Untitled UI" }: SupportPageProps) =
                             </label>
                             <div className="flex items-center justify-center rounded-lg border-2 border-dashed border-border-primary py-8 hover:border-border-brand">
                                 <div className="text-center">
-                                    <FileText className="mx-auto mb-2 size-8 text-fg-quaternary" />
+                                    <File02 className="mx-auto mb-2 size-8 text-fg-quaternary" />
                                     <p className="text-sm text-fg-secondary">
                                         <span className="font-medium text-fg-brand-primary">Click to upload</span> or
                                         drag and drop
@@ -654,7 +654,7 @@ export const SupportPage = ({ companyName = "Untitled UI" }: SupportPageProps) =
                         href="#"
                         className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-primary p-4 transition-colors hover:border-border-brand"
                     >
-                        <Book01 className="size-5 text-fg-quaternary" />
+                        <BookClosed className="size-5 text-fg-quaternary" />
                         <div>
                             <p className="font-medium text-fg-primary">Knowledge Base</p>
                             <p className="text-sm text-fg-tertiary">Browse articles</p>
@@ -664,7 +664,7 @@ export const SupportPage = ({ companyName = "Untitled UI" }: SupportPageProps) =
                         href="#"
                         className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-primary p-4 transition-colors hover:border-border-brand"
                     >
-                        <MessageChatCircle className="size-5 text-fg-quaternary" />
+                        <MessageCircle02 className="size-5 text-fg-quaternary" />
                         <div>
                             <p className="font-medium text-fg-primary">Live Chat</p>
                             <p className="text-sm text-fg-tertiary">Talk to us now</p>

@@ -5,19 +5,19 @@ import {
     BarChart01,
     Users01,
     Settings01,
-    FileText,
+    File02,
     CreditCard01,
     HelpCircle,
     ChevronDown,
     Bell01,
-    Search,
+    SearchMd,
     Plus,
     ArrowUp,
     ArrowDown,
     DotsHorizontal,
     Calendar,
     Download01,
-    Filter,
+    FilterLines,
 } from "@untitledui-pro/icons/line";
 
 // ============================================
@@ -125,7 +125,7 @@ export const AnalyticsDashboard = ({
                     <SidebarItem icon={<Home02 className="size-5" />} label="Dashboard" active />
                     <SidebarItem icon={<BarChart01 className="size-5" />} label="Analytics" />
                     <SidebarItem icon={<Users01 className="size-5" />} label="Customers" badge="12" />
-                    <SidebarItem icon={<FileText className="size-5" />} label="Reports" />
+                    <SidebarItem icon={<File02 className="size-5" />} label="Reports" />
                     <SidebarItem icon={<CreditCard01 className="size-5" />} label="Billing" />
                     <SidebarItem icon={<Settings01 className="size-5" />} label="Settings" />
                 </nav>
@@ -153,7 +153,7 @@ export const AnalyticsDashboard = ({
                 <header className="flex h-16 items-center justify-between border-b border-border-secondary bg-bg-primary px-6">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-fg-quaternary" />
+                            <SearchMd className="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-fg-quaternary" />
                             <input
                                 type="text"
                                 placeholder="Search..."
@@ -200,7 +200,7 @@ export const AnalyticsDashboard = ({
                             value="12,234"
                             change="+19%"
                             trend="up"
-                            icon={<FileText className="size-5 text-fg-quaternary" />}
+                            icon={<File02 className="size-5 text-fg-quaternary" />}
                         />
                         <MetricCard
                             title="Bounce Rate"
@@ -336,7 +336,7 @@ export const SimpleDashboard = ({ userName = "Olivia" }: SimpleDashboardProps) =
                     </div>
                     <div className="flex items-center gap-3">
                         <button className="flex items-center gap-2 rounded-lg border border-border-primary bg-bg-primary px-4 py-2 text-sm font-medium text-fg-secondary hover:bg-bg-secondary_hover">
-                            <Filter className="size-4" />
+                            <FilterLines className="size-4" />
                             Filters
                         </button>
                         <button className="flex items-center gap-2 rounded-lg bg-bg-brand-solid px-4 py-2 text-sm font-medium text-fg-white hover:bg-bg-brand-solid_hover">

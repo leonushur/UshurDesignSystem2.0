@@ -128,7 +128,7 @@ export const Default: StoryObj<typeof CommandMenu> = {
                 <div className="w-full max-w-md">
                     <CommandTrigger
                         onClick={() => setIsOpen(true)}
-                        placeholder="Search commands..."
+                        placeholder="SearchMd commands..."
                         className="w-full"
                     />
                 </div>
@@ -194,7 +194,7 @@ export const WithKeyboardShortcut: StoryObj<typeof CommandMenu> = {
 
                 <CommandTrigger
                     onClick={() => setIsOpen(true)}
-                    placeholder="Search or press ⌘K..."
+                    placeholder="SearchMd or press ⌘K..."
                     className="w-72"
                 />
 

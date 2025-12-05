@@ -12,7 +12,7 @@ const meta: Meta<typeof Select.ComboBox> = {
     title: "Components/Select/ComboBox",
     component: Select.ComboBox,
     args: {
-        label: "Search team",
+        label: "SearchMd team",
         placeholder: "Type a name",
         items: people,
         children: (item: (typeof people)[number]) => (

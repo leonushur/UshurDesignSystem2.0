@@ -77,13 +77,13 @@ const IconBrowser = () => {
 
                 <div className="flex flex-wrap items-center gap-4">
                     <label className="text-sm font-semibold text-secondary" htmlFor="icon-search">
-                        Search
+                        SearchMd
                     </label>
                     <input
                         id="icon-search"
                         value={query}
                         onChange={(event) => setQuery(event.target.value)}
-                        placeholder="Search by icon name…"
+                        placeholder="SearchMd by icon name…"
                         className="flex-1 rounded-lg border border-primary bg-white px-3 py-2 text-sm text-secondary outline-none focus-visible:ring-2 focus-visible:ring-brand-solid md:max-w-sm"
                     />
                     <span className="text-xs font-semibold text-tertiary">
