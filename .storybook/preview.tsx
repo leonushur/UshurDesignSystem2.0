@@ -28,6 +28,12 @@ const ThemeWrapper: Decorator = (Story, context) => {
 };
 
 const preview: Preview = {
+    // Story sorting to show Welcome/Introduction first
+    options: {
+        storySort: {
+            order: ["Welcome", ["Introduction"], "Foundations", "Components", "Application", "Marketing", "*"],
+        },
+    },
     globalTypes: {
         theme: {
             name: "Theme",

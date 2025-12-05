@@ -170,6 +170,22 @@ This project has specialized sub-agents. Use `/agents` to list them.
 
 **IMPORTANT**: When working on this project, automatically dispatch to the appropriate sub-agent based on the task. Do NOT ask the user - just use the agent.
 
+### 🔔 Agent Dispatch Notification (REQUIRED)
+
+**BEFORE dispatching to ANY sub-agent, you MUST output this notification:**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│ 🤖 DISPATCHING TO SUB-AGENT                                 │
+│                                                             │
+│ Agent: [agent-name]                                         │
+│ Task: [brief task description]                              │
+│ Reason: [why this agent was chosen]                         │
+└─────────────────────────────────────────────────────────────┘
+```
+
+This ensures visibility into agent delegation decisions.
+
 ### When to Use Each Agent
 
 | Task Pattern | Agent to Use | Auto-Dispatch |
@@ -263,4 +279,55 @@ npm run dev            # Start Vite on :5173
 npm run build          # Production build
 npm run build-storybook # Build static Storybook
 ```
+
+## Verifying Sub-Agent Dispatch
+
+### Claude CLI Verbose Mode
+
+To see detailed output about agent dispatch, run:
+
+```bash
+claude --verbose
+# or
+claude -v
+```
+
+### Expected Output When Sub-Agent Is Called
+
+When a sub-agent is invoked, you should see:
+
+1. **Dispatch notification** (the box above)
+2. **Agent activation header** (from the sub-agent itself):
+   ```
+   ╔══════════════════════════════════════════════════════════════╗
+   ║  📚 STORYBOOK CREATOR ACTIVATED                              ║
+   ║  Task: Create Button component with variants                 ║
+   ╚══════════════════════════════════════════════════════════════╝
+   ```
+3. **Sub-agent work output**
+4. **Completion notice**
+
+### Testing Agent Dispatch
+
+To verify agents are working, try these prompts:
+
+| Prompt | Expected Agent |
+|--------|----------------|
+| "Audit the Button component" | design-system-auditor |
+| "Create a new Card component" | storybook-creator |
+| "Test the Modal stories" | storybook-tester |
+| "Implement this Figma design" | figma-implementer |
+| "Review the recent code changes" | code-reviewer |
+| "Find all usages of cx utility" | codebase-explorer |
+| "The Vercel build is failing" | vercel-deployment-verifier |
+
+### Troubleshooting
+
+If sub-agents aren't being called:
+
+1. **Check agent files exist**: `.claude/agents/*.md`
+2. **Verify CLAUDE.md is in project root**
+3. **Use explicit trigger phrases** from agent descriptions
+4. **Try `/agents` command** to list available agents
+5. **Run with `--verbose`** to see decision process
 

@@ -511,7 +511,7 @@ export const DividerLine04: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header
                 title="Files uploaded"
@@ -562,7 +562,7 @@ export const AlternatingFills01: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => <AlternatingTable highlight="rows" />,
+    render: (args) => <AlternatingTable highlight="rows" />,
 };
 
 export const AlternatingFills02: Story = {
@@ -571,7 +571,7 @@ export const AlternatingFills02: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => <AlternatingTable highlight="cols" />,
+    render: (args) => <AlternatingTable highlight="cols" />,
 };
 
 export const AlternatingFills03: Story = {
@@ -580,7 +580,7 @@ export const AlternatingFills03: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => <AlternatingTable highlight="rows" showFooter={false} />,
+    render: (args) => <AlternatingTable highlight="rows" showFooter={false} />,
 };
 
 export const AlternatingFills04: Story = {
@@ -589,7 +589,7 @@ export const AlternatingFills04: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => <AlternatingTable highlight="cols" showFooter={false} />,
+    render: (args) => <AlternatingTable highlight="cols" showFooter={false} />,
 };
 
 export const NoVendorsFound: Story = {
@@ -598,7 +598,7 @@ export const NoVendorsFound: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header
                 title="Vendor movements"
@@ -633,7 +633,7 @@ export const StartByUploadingFile: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header
                 title="Files uploaded"
@@ -664,7 +664,7 @@ export const TableErrorState: Story = {
         enableResize: false,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header
                 title="Team members"
@@ -695,7 +695,7 @@ export const ResizableColumns: Story = {
         enableResize: true,
         enableReorder: false,
     },
-    render: () => (
+    render: (args) => (
         <TableCard.Root>
             <TableCard.Header title="Team members" badge="5 users" description="Drag column edges to resize. Hover over the right edge of each column header to see the resize handle." />
             <Table aria-label="Team members" enableResize>
@@ -741,7 +741,7 @@ export const ReorderableColumns: Story = {
         enableResize: false,
         enableReorder: true,
     },
-    render: () => {
+    render: (args) => {
         const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
 
         const handleColumnReorder = (fromId: string, toId: string) => {
@@ -829,7 +829,7 @@ export const SortableResizableReorderableColumns: Story = {
         enableReorder: true,
         selectionMode: "multiple",
     },
-    render: () => {
+    render: (args) => {
         const [columnOrder, setColumnOrder] = useState(["name", "status", "role", "email", "actions"]);
 
         const handleColumnReorder = (fromId: string, toId: string) => {

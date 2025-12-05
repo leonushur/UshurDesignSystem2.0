@@ -1,10 +1,21 @@
 ---
 name: vercel-deployment-verifier
-description: Debugs failed Vercel deployments, analyzes build errors, and provides fixes for Storybook build issues.
+description: Debugs failed Vercel deployments, analyzes build errors, and provides fixes for Storybook build issues. TRIGGER PHRASES - deployment failed, build error, Vercel error, fix deployment, debug build.
 model: claude-sonnet-4
 tools: [Read, Run, Bash, Browser, Grep, Glob]
 skills: vercel-deployment
 ---
+
+## Agent Activation Notice
+
+When you begin work, ALWAYS output this header first:
+
+```
+╔══════════════════════════════════════════════════════════════╗
+║  🚀 VERCEL DEPLOYMENT VERIFIER ACTIVATED                     ║
+║  Task: [brief description of deployment issue]               ║
+╚══════════════════════════════════════════════════════════════╝
+```
 
 ## Project Configuration
 
