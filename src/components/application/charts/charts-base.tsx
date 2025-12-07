@@ -69,7 +69,7 @@ export const ChartLegendContent = ({ reversed, payload, align, layout, className
 interface ChartTooltipContentProps extends TooltipProps<ValueType, NameType> {
     isRadialChart?: boolean;
     isPieChart?: boolean;
-    label?: string;
+    label?: string | number;
     // We have to use `any` here because the `payload` prop is not typed correctly in the `recharts` library.
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payload?: any;

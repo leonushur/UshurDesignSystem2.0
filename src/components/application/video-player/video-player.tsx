@@ -45,7 +45,7 @@ export const VideoPlayer = ({
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [showControlsState, setShowControlsState] = useState(true);
-    const hideControlsTimeoutRef = useRef<NodeJS.Timeout>();
+    const hideControlsTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
     useEffect(() => {
         const video = videoRef.current;

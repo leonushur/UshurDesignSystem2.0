@@ -94,7 +94,7 @@ export const RadioCard = ({
                     ],
                     // Disabled state
                     renderProps.isDisabled && "cursor-not-allowed opacity-50",
-                    typeof className === "function" ? className(renderProps) : className,
+                    className,
                 )
             }
         >
@@ -225,7 +225,7 @@ export const RadioTile = ({ label, icon, className, ...props }: RadioTileProps) 
                     "hover:border-border-brand hover:bg-bg-primary_hover",
                     renderProps.isSelected && "border-border-brand bg-bg-brand_secondary",
                     renderProps.isDisabled && "cursor-not-allowed opacity-50",
-                    typeof className === "function" ? className(renderProps) : className,
+                    className,
                 )
             }
         >
@@ -273,7 +273,7 @@ export const RadioListItem = ({ label, description, trailing, className, ...prop
                     "hover:bg-bg-secondary",
                     renderProps.isSelected && "bg-bg-brand_secondary",
                     renderProps.isDisabled && "cursor-not-allowed opacity-50",
-                    typeof className === "function" ? className(renderProps) : className,
+                    className,
                 )
             }
         >

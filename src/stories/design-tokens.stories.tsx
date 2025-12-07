@@ -2,7 +2,11 @@ import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import type { Meta } from "@storybook/react";
 import tokens from "./tokens.json";
-const COLOR_VALUE_MAP: Record<string, string> = tokens.colors;
+
+// Convert the colors array to a lookup map: token -> hex
+const COLOR_VALUE_MAP: Record<string, string> = Object.fromEntries(
+    tokens.colors.map((c) => [c.token, c.hex])
+);
 
 const meta = {
     title: "Foundations/Design Tokens",

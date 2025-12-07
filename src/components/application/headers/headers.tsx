@@ -1,8 +1,9 @@
-import type { ReactNode, ComponentType, SVGProps } from "react";
+import type { ReactNode, ComponentType, SVGProps, FC } from "react";
 import { Button } from "@/components/base/buttons/button";
 import { cx } from "@/utils/cx";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+type ButtonIconType = FC<{ className?: string }> | ReactNode;
 
 export interface PageHeaderProps {
     /** Page title */
@@ -56,7 +57,7 @@ export const PageHeader = ({
                         </Button>
                     )}
                     {primaryAction && (
-                        <Button color="primary" onPress={onPrimaryAction} iconLeading={primaryActionIcon}>
+                        <Button color="primary" onPress={onPrimaryAction} iconLeading={primaryActionIcon as ButtonIconType}>
                             {primaryAction}
                         </Button>
                     )}
@@ -98,7 +99,7 @@ export const PageHeaderWithTabs = ({
                         </Button>
                     )}
                     {primaryAction && (
-                        <Button color="primary" onPress={onPrimaryAction} iconLeading={primaryActionIcon}>
+                        <Button color="primary" onPress={onPrimaryAction} iconLeading={primaryActionIcon as ButtonIconType}>
                             {primaryAction}
                         </Button>
                     )}

@@ -64,7 +64,7 @@ export const PieChart = ({
             <ResponsiveContainer width="100%" height={height}>
                 <RechartsPieChart>
                     <Pie
-                        data={data}
+                        data={data as never}
                         cx="50%"
                         cy="50%"
                         innerRadius={innerRadius}
@@ -72,7 +72,7 @@ export const PieChart = ({
                         paddingAngle={isDonut ? 2 : 0}
                         dataKey="value"
                         nameKey="name"
-                        label={showLabels ? ({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%` : undefined}
+                        label={showLabels ? ({ name, percent }) => `${name}: ${((percent ?? 0) * 100).toFixed(0)}%` : undefined}
                         labelLine={showLabels}
                     >
                         {data.map((entry, index) => (
@@ -130,7 +130,7 @@ export const DonutChart = ({
             <ResponsiveContainer width="100%" height={height}>
                 <RechartsPieChart>
                     <Pie
-                        data={data}
+                        data={data as never}
                         cx="50%"
                         cy="50%"
                         innerRadius={innerRadius}

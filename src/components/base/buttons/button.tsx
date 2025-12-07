@@ -155,7 +155,10 @@ export interface CommonProps {
 /**
  * Props for the button variant (non-link)
  */
-export interface ButtonProps extends CommonProps, DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement> {
+export interface ButtonProps
+    extends CommonProps,
+        DetailedHTMLProps<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "color" | "slot">, HTMLButtonElement>,
+        Pick<AriaButtonProps, "onPress" | "onPressStart" | "onPressEnd" | "onPressChange" | "onPressUp"> {
     /** Slot name for react-aria component */
     slot?: AriaButtonProps["slot"];
 }

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode, JSX } from "react";
 import { cx } from "@/utils/cx";
 import { Input } from "@/components/base/input/input";
 import { Button } from "@/components/base/buttons/button";
