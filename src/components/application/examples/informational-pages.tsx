@@ -1081,3 +1081,4 @@ export const StatusPage = ({ companyName = "Untitled UI" }: StatusPageProps) => 
 };
 StatusPage.displayName = "StatusPage";
 
+

@@ -5,31 +5,10 @@ import { CTASectionCentered } from "@/components/marketing/cta-sections";
 import { NewsletterCTACard } from "@/components/marketing/newsletter-cta-sections";
 import { FooterSectionSimple } from "@/components/marketing/footer-sections";
 
-const contactCards = [
-    {
-        title: "Sales inquiry",
-        description: "Talk with product specialists about pricing, implementation, and rollout plans.",
-        channels: [
-            { label: "sales@ushur.com", value: "Email", href: "mailto:sales@ushur.com" },
-            { label: "+1 (415) 555-0123", value: "Phone" },
-        ],
-    },
-    {
-        title: "Support",
-        description: "24/7 support for Ushur customers with dedicated SLA response times.",
-        channels: [
-            { label: "support@ushur.com", value: "Email", href: "mailto:support@ushur.com" },
-            { label: "@UshurSupport", value: "Slack Connect" },
-        ],
-    },
-    {
-        title: "Media & partnerships",
-        description: "Speaking invitations, sponsorships, and media kits.",
-        channels: [
-            { label: "press@ushur.com", value: "Email", href: "mailto:press@ushur.com" },
-            { label: "View media kit", value: "Deck", href: "/media-kit" },
-        ],
-    },
+const contactFields = [
+    { label: "Sales inquiry", value: "sales@ushur.com", href: "mailto:sales@ushur.com" },
+    { label: "Support", value: "support@ushur.com", href: "mailto:support@ushur.com" },
+    { label: "Media & partnerships", value: "press@ushur.com", href: "mailto:press@ushur.com" },
 ];
 
 const faqItems = [
@@ -63,8 +42,8 @@ export const ContactPage = () => {
                 <ContactSectionCards
                     eyebrow="Contact"
                     title="Talk with Ushur"
-                    description="We’re here to help with product questions, pricing, implementation, or anything else."
-                    cards={contactCards}
+                    description="We're here to help with product questions, pricing, implementation, or anything else."
+                    fields={contactFields}
                 />
 
                 <ContactSectionForm

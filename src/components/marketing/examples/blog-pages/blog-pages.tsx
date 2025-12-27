@@ -7,6 +7,8 @@ import { FooterSectionSimple } from "@/components/marketing/footer-sections";
 import { ContentSectionStack } from "@/components/marketing/content-rich-text-sections";
 
 const featuredPost = {
+    id: "featured-1",
+    category: "Design Systems",
     title: "Rolling out a design system without slowing roadmap velocity",
     description: "Learn how Ushur helped 12 teams ship a cohesive product suite by standardizing Storybook and design tokens.",
     author: {
@@ -15,52 +17,65 @@ const featuredPost = {
     },
     date: "Nov 12, 2025",
     readingTime: "8 min read",
-    tags: ["Design systems", "Storybook", "Scaling"],
 };
 
 const secondaryPosts = [
     {
+        id: "secondary-1",
+        category: "Tailwind",
         title: "We shipped Tailwind CSS 4 support",
         description: "A quick primer on the new color system, variable extraction, and how to migrate smoothly.",
         date: "Nov 3, 2025",
         readingTime: "5 min read",
+        author: { name: "Alex Chen", role: "Staff Engineer" },
     },
     {
+        id: "secondary-2",
+        category: "Design Tokens",
         title: "Figma variables to React without breaking a sweat",
         description: "Map design tokens to your codebase with our CLI and keep teams in sync.",
         date: "Oct 27, 2025",
         readingTime: "6 min read",
+        author: { name: "Jordan Lee", role: "Design Engineer" },
     },
 ];
 
 const cardPosts = [
     {
+        id: "card-1",
+        category: "Guides",
         title: "How to run a component health audit",
-        description: "Use Ushur’s audit worksheet to prioritize fixes and measure impact.",
+        description: "Use Ushur's audit worksheet to prioritize fixes and measure impact.",
         date: "Oct 18, 2025",
         readingTime: "7 min",
-        tag: "Guides",
+        author: { name: "Sam Rivera", role: "DX Engineer" },
     },
     {
+        id: "card-2",
+        category: "Marketing",
         title: "Marketing sections that convert",
         description: "Break down the formulas powering our favorite landing page layouts.",
         date: "Oct 05, 2025",
         readingTime: "4 min",
-        tag: "Marketing",
+        author: { name: "Chris Park", role: "Growth Lead" },
     },
     {
+        id: "card-3",
+        category: "DevOps",
         title: "The perfect Storybook deployment pipeline",
         description: "Integrate Vercel, Chromatic, and GitHub Actions without fighting config files.",
         date: "Sep 28, 2025",
         readingTime: "9 min",
-        tag: "DevOps",
+        author: { name: "Taylor Kim", role: "Platform Engineer" },
     },
     {
+        id: "card-4",
+        category: "Opinion",
         title: "Ushur vs. rolling your own",
         description: "A transparent comparison of cost, speed, and maintenance tradeoffs.",
         date: "Sep 20, 2025",
         readingTime: "6 min",
-        tag: "Opinion",
+        author: { name: "Morgan Chen", role: "Tech Lead" },
     },
 ];
 
@@ -101,9 +116,9 @@ export const BlogPage = () => {
                 <BlogSectionFeatured
                     eyebrow="Blog"
                     title="Stories from builders shipping great product experiences"
-                    description="Insights from Ushur’s design systems team, plus tips from the community."
+                    description="Insights from Ushur's design systems team, plus tips from the community."
                     featured={featuredPost}
-                    secondary={secondaryPosts}
+                    posts={secondaryPosts}
                 />
                 <BlogSectionCards
                     eyebrow="Latest"
@@ -111,12 +126,12 @@ export const BlogPage = () => {
                     description="All the articles our team has shipped lately."
                     posts={cardPosts}
                 />
-                <ContentSectionStack eyebrow="Editorial" title="How we publish" items={contentBlocks} />
+                <ContentSectionStack eyebrow="Editorial" title="How we publish" sections={contentBlocks} />
                 <SocialProofSectionCards
                     eyebrow="Community"
                     title="We write for teams building ambitious product experiences"
-                    description="From fintech to productivity, Ushur’s readers span every vertical."
-                    highlights={proofHighlights}
+                    description="From fintech to productivity, Ushur's readers span every vertical."
+                    cards={proofHighlights}
                 />
                 <CTASectionSplit
                     eyebrow="Newsletter"

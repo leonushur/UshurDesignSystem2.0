@@ -33,34 +33,16 @@ const leadership = [
     },
 ];
 
-const departments = [
-    {
-        title: "Product & Design",
-        description: "Designers, researchers, and writers focused on high-quality experiences.",
-        members: [
-            { name: "Ava Singh", role: "Staff Product Designer" },
-            { name: "Leo Adams", role: "Design Systems PM" },
-            { name: "Ivy Flores", role: "Content Strategist" },
-        ],
-    },
-    {
-        title: "Engineering",
-        description: "Frontend, tooling, and DX experts shipping world-class components.",
-        members: [
-            { name: "Marcus Lee", role: "Lead Frontend Engineer" },
-            { name: "Hannah Ray", role: "DX Engineer" },
-            { name: "Julian Ortiz", role: "QA Engineer" },
-        ],
-    },
-    {
-        title: "Customer Experience",
-        description: "Solutions architects and success managers helping customers adopt Ushur.",
-        members: [
-            { name: "Priya Desai", role: "Head of Customer Success" },
-            { name: "Chris Nolan", role: "Solutions Architect" },
-            { name: "Emily Ford", role: "Implementation Manager" },
-        ],
-    },
+const teamMembers = [
+    { name: "Ava Singh", role: "Staff Product Designer" },
+    { name: "Leo Adams", role: "Design Systems PM" },
+    { name: "Ivy Flores", role: "Content Strategist" },
+    { name: "Marcus Lee", role: "Lead Frontend Engineer" },
+    { name: "Hannah Ray", role: "DX Engineer" },
+    { name: "Julian Ortiz", role: "QA Engineer" },
+    { name: "Priya Desai", role: "Head of Customer Success" },
+    { name: "Chris Nolan", role: "Solutions Architect" },
+    { name: "Emily Ford", role: "Implementation Manager" },
 ];
 
 const logos = ["LinearFlow", "Northwind", "Glimpse", "Unison", "Drift", "Contour"];
@@ -94,7 +76,7 @@ export const TeamPage = () => {
                     eyebrow="Departments"
                     title="Meet the rest of Ushur"
                     description="Every department collaborates closely through Storybook-driven workflows."
-                    sections={departments}
+                    members={teamMembers}
                 />
 
                 <CTASectionSplit

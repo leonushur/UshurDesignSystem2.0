@@ -149,8 +149,25 @@ const DropdownDotsButton = (props: AriaButtonProps & RefAttributes<HTMLButtonEle
     );
 };
 
+const DropdownButton = (props: AriaButtonProps & RefAttributes<HTMLButtonElement>) => {
+    return (
+        <AriaButton
+            {...props}
+            className={(state) =>
+                cx(
+                    "inline-flex items-center gap-2 rounded-lg border border-border-primary bg-bg-primary px-4 py-2 text-sm font-semibold text-fg-secondary outline-focus-ring transition duration-100 ease-linear",
+                    "hover:bg-bg-primary_hover hover:text-fg-secondary_hover",
+                    (state.isPressed || state.isFocusVisible) && "outline-2 outline-offset-2",
+                    typeof props.className === "function" ? props.className(state) : props.className,
+                )
+            }
+        />
+    );
+};
+
 export const Dropdown = {
     Root: AriaMenuTrigger,
+    Button: DropdownButton,
     Popover: DropdownPopover,
     Menu: DropdownMenu,
     Section: AriaMenuSection,

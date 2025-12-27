@@ -31,12 +31,12 @@ const plans = [
     },
 ];
 
-const comparisonRows = [
-    { feature: "Components", starter: "100", pro: "3,000+", enterprise: "Unlimited" },
-    { feature: "Marketing examples", starter: "—", pro: "12 pages", enterprise: "Custom" },
-    { feature: "Support", starter: "Community", pro: "Priority email", enterprise: "Slack + dedicated PM" },
-    { feature: "Theming CLI", starter: "—", pro: "Included", enterprise: "Included + training" },
-    { feature: "License", starter: "MIT", pro: "Commercial", enterprise: "Commercial" },
+const comparisonFeatures = [
+    { label: "Components", plans: { starter: "100", pro: "3,000+", enterprise: "Unlimited" } },
+    { label: "Marketing examples", plans: { starter: false, pro: "12 pages", enterprise: "Custom" } },
+    { label: "Support", plans: { starter: "Community", pro: "Priority email", enterprise: "Slack + dedicated PM" } },
+    { label: "Theming CLI", plans: { starter: false, pro: true, enterprise: true } },
+    { label: "License", plans: { starter: "MIT", pro: "Commercial", enterprise: "Commercial" } },
 ];
 
 const faqItems = [
@@ -77,7 +77,8 @@ export const PricingPage = () => {
                     eyebrow="Compare plans"
                     title="Find the right plan for your team"
                     description="Every plan includes access to the same design system foundations. Higher tiers add marketing examples, CLI tooling, and dedicated support."
-                    rows={comparisonRows}
+                    features={comparisonFeatures}
+                    plans={plans}
                 />
                 <FAQSectionAccordion
                     eyebrow="Pricing FAQ"

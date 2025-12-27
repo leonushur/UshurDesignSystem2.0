@@ -1,6 +1,6 @@
 
 import type { Meta, StoryObj } from "@storybook/react";
-import type { ComponentProps, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useState } from "react";
 import { Table, TableCard, TableRowActionsDropdown } from "./table";
 import { Avatar } from "@/components/base/avatar/avatar";
@@ -9,6 +9,7 @@ import { PaginationCardDefault } from "@/components/application/pagination/pagin
 import { Button } from "@/components/base/buttons/button";
 import { Dropdown } from "@/components/base/dropdown/dropdown";
 import { FileIcon } from "@untitledui/file-icons";
+import { SearchLg, UploadCloud02 } from "@untitledui-pro/icons/line";
 import { cx } from "@/utils/cx";
 
 const meta: Meta<typeof Table> = {
@@ -418,7 +419,7 @@ export const DividerLine02: Story = {
                         <Table.Row id={item.name}>
                             <Table.Cell>
                                 <div className="flex items-center gap-3">
-                                    <FileIcon name={item.icon as ComponentProps<typeof FileIcon>["name"]} className="size-6 text-brand-solid" />
+                                    <FileIcon type={item.icon} className="size-6" />
                                     <div>
                                         <p className="font-semibold text-secondary">{item.name}</p>
                                         <p className="text-xs text-quaternary">Workspace files</p>
@@ -537,7 +538,7 @@ export const DividerLine04: Story = {
                         <Table.Row id={item.name}>
                             <Table.Cell>
                                 <div className="flex items-center gap-3">
-                                    <FileIcon name={item.icon as ComponentProps<typeof FileIcon>["name"]} className="size-6 text-brand-solid" />
+                                    <FileIcon type={item.icon} className="size-6" />
                                     <div className="flex flex-col">
                                         <span className="font-semibold text-secondary">{item.name}</span>
                                         <span className="text-xs text-quaternary">Internal asset</span>
@@ -613,7 +614,7 @@ export const NoVendorsFound: Story = {
             />
             <Toolbar filters={vendorFilters} actions={<Button variant="secondary">Filters</Button>} />
             <div className="flex flex-col items-center gap-4 px-8 py-16 text-center">
-                <FileIcon name="search" className="size-12 text-tertiary" />
+                <SearchLg className="size-12 text-tertiary" />
                 <div>
                     <h3 className="text-lg font-semibold text-secondary">No vendors found</h3>
                     <p className="text-sm text-tertiary">Your search “Stripe” did not match any vendors. Try again or add a new vendor.</p>
@@ -643,7 +644,7 @@ export const StartByUploadingFile: Story = {
             />
             <div className="flex flex-col items-center gap-4 px-8 py-16 text-center">
                 <div className="rounded-full border border-dashed border-secondary p-6">
-                    <FileIcon name="upload" className="size-8 text-secondary" />
+                    <UploadCloud02 className="size-8 text-secondary" />
                 </div>
                 <div>
                     <h3 className="text-lg font-semibold text-secondary">Start by uploading a file</h3>

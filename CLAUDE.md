@@ -1,123 +1,212 @@
-# Ushur Design System - Project Rules
+# Ushur Design System
 
-This file provides context and rules for AI assistants working on the Ushur Design System.
+> A comprehensive React component library with 106 stories, 9 AI agents, and full Storybook documentation.
 
-## Project Overview
+---
 
-The Ushur Design System is a comprehensive React component library built with:
-- **React 19** - UI framework
-- **TypeScript** - Type safety
-- **Storybook 10** - Component documentation and development
-- **Tailwind CSS 4** - Utility-first styling with custom design tokens
-- **React Aria Components** - Accessible component primitives
-- **Vite 7** - Build tool
-- **Vitest + Playwright** - Testing framework
+## Quick Reference
 
-## Quick Start
+| Command | Description |
+|---------|-------------|
+| `npm run storybook` | Start Storybook on http://localhost:6006 |
+| `npm run build-storybook` | Build static Storybook |
+| `npm run dev` | Start Vite dev server on :5173 |
+| `npx tsc --noEmit` | Type check without building |
 
-```bash
-# Install dependencies
-bun install
+---
 
-# Start Storybook development
-npm run storybook
+## Tech Stack
 
-# Build Storybook
-npm run build-storybook
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| React | 19 | UI Framework |
+| TypeScript | 5.x | Type Safety |
+| Storybook | 10 | Component Documentation |
+| Tailwind CSS | 4 | Styling with Design Tokens |
+| React Aria | Latest | Accessible Primitives |
+| Vite | 7 | Build Tool |
+| Playwright | 1.57 | Browser Testing |
 
-# Start Vite dev server
-npm run dev
-```
+---
 
-**Storybook runs on port 6006**: http://localhost:6006
-
-## Directory Structure
+## Project Structure
 
 ```
 src/
 ├── components/
-│   ├── application/     # App-level patterns (nav, modals, tables, pagination)
-│   ├── base/           # Primitives (buttons, inputs, forms, selects)
-│   ├── foundations/    # Visual elements (icons, logos, rating stars)
-│   ├── marketing/      # Marketing sections (headers, CTAs, testimonials)
-│   └── shared-assets/  # Backgrounds, illustrations
-├── hooks/              # useBreakpoint, useClipboard, useResizeObserver
-├── styles/             # theme.css, globals.css, typography.css
-└── utils/              # cx (class merger), isReactComponent
+│   ├── primitives/      # Atomic building blocks
+│   ├── application/     # App patterns (nav, modals, tables)
+│   ├── base/            # Core components (buttons, inputs)
+│   ├── foundations/     # Icons, logos, visual elements
+│   ├── marketing/       # Marketing sections
+│   └── shared-assets/   # Backgrounds, illustrations
+├── hooks/               # Custom React hooks
+├── styles/              # Theme, globals, typography
+└── utils/               # Utilities (cx, isReactComponent)
 ```
 
-## Design System Rules
+---
 
-### 1. Always Use Semantic Tokens
+## AI Agents
 
-**DO:**
+This project uses 9 specialized AI agents for autonomous development.
+
+### Agent Roster
+
+| Agent | Model | Trigger Phrases |
+|-------|-------|-----------------|
+| `storybook-creator` | Sonnet | "create component", "add stories" |
+| `storybook-tester` | Sonnet | "test component", "verify stories" |
+| `storybook-monitor` | Haiku | "storybook status", "start storybook" |
+| `figma-implementer` | Sonnet | "implement Figma", "convert design" |
+| `design-system-auditor` | Sonnet | "audit tokens", "check compliance" |
+| `code-reviewer` | Sonnet | "review code", "check quality" |
+| `codebase-explorer` | Haiku | "find", "search", "where is" |
+| `browser-debugger` | Sonnet | "console error", "debug browser" |
+| `vercel-deployment-verifier` | Sonnet | "deployment failed", "build error" |
+
+### Workflow Chains
+
+```
+Component Creation:
+  storybook-creator → design-system-auditor → storybook-tester → code-reviewer
+
+Figma Implementation:
+  figma-implementer → storybook-creator → design-system-auditor → storybook-tester
+
+Debugging:
+  browser-debugger → storybook-creator → storybook-tester
+
+Deployment:
+  vercel-deployment-verifier → [fix agent] → storybook-monitor
+```
+
+---
+
+## Design Tokens
+
+### Text Colors
+
+| Token | Usage |
+|-------|-------|
+| `text-fg-primary` | Primary text |
+| `text-fg-secondary` | Secondary text |
+| `text-fg-tertiary` | Muted text |
+| `text-fg-disabled` | Disabled states |
+| `text-fg-brand-primary` | Brand accent |
+| `text-fg-error-primary` | Error messages |
+
+### Background Colors
+
+| Token | Usage |
+|-------|-------|
+| `bg-bg-primary` | Main background |
+| `bg-bg-secondary` | Subtle background |
+| `bg-bg-tertiary` | Cards, panels |
+| `bg-bg-brand-solid` | Primary buttons |
+
+### Border Colors
+
+| Token | Usage |
+|-------|-------|
+| `border-border-primary` | Default borders |
+| `border-border-secondary` | Subtle borders |
+| `border-border-brand` | Brand accent |
+| `border-border-error` | Error states |
+
+### Usage Rules
+
 ```tsx
-<div className="text-fg-primary bg-bg-secondary border-border-primary">
+// Correct - Use semantic tokens
+<div className="text-fg-primary bg-bg-secondary border-border-primary" />
+
+// Wrong - Hardcoded values
+<div className="text-gray-900 bg-gray-50" />
+<div style={{ color: '#191919' }} />
 ```
 
-**DON'T:**
+---
+
+## Component Primitives
+
+Reusable building blocks for consistent patterns.
+
+### Table Cells
+
 ```tsx
-<div className="text-gray-900 bg-gray-50 border-gray-300">
-<div style={{ color: '#191919' }}>
+import {
+  TableCellAvatar,
+  TableCellBadge,
+  TableCellActions,
+  TableCellText,
+  TableCellStatus,
+  TableCellCheckbox
+} from "@/components/primitives/table-cells";
 ```
 
-### 2. Token Reference
+### Avatar Compositions
 
-**Text Colors:** `text-fg-{primary|secondary|tertiary|disabled|brand-*|error-*}`
-**Backgrounds:** `bg-bg-{primary|secondary|tertiary|brand-*|error-*|success-*}`
-**Borders:** `border-border-{primary|secondary|brand|error|disabled}`
-**Foregrounds:** `text-{fg-*}` for icons and interactive elements
+```tsx
+import {
+  AvatarLabelGroup,
+  AvatarStack,
+  AvatarWithText
+} from "@/components/primitives/avatar-compositions";
+```
 
-### 3. Typography Scale
+### Badge Compositions
 
-Use Tailwind text sizes:
-- Body: `text-xs`, `text-sm`, `text-md`, `text-lg`, `text-xl`
-- Display: `text-display-xs` through `text-display-2xl`
+```tsx
+import {
+  StatusBadge,
+  CategoryBadge,
+  CountBadge,
+  DismissibleBadge
+} from "@/components/primitives/badge-compositions";
+```
 
-### 4. Spacing
+### Form Fields
 
-Follow the 4px grid using Tailwind spacing:
-- `p-1` = 4px, `p-2` = 8px, `p-3` = 12px, `p-4` = 16px, etc.
-- Use `gap-*` for flex/grid spacing
+```tsx
+import {
+  FieldLabel,
+  FieldHint,
+  FieldError,
+  FieldWrapper
+} from "@/components/primitives/form-fields";
+```
 
-### 5. Shadows
-
-Use semantic shadows: `shadow-xs`, `shadow-sm`, `shadow-md`, `shadow-lg`, `shadow-xl`
-
-### 6. Border Radius
-
-- Default: `rounded-md` (6px)
-- Buttons: `rounded-lg` (8px)
-- Cards: `rounded-xl` (12px)
-- Pills/Avatars: `rounded-full`
+---
 
 ## Component Patterns
 
 ### Creating a New Component
 
-1. Create component file: `src/components/{category}/{name}/{name}.tsx`
-2. Create stories file: `src/components/{category}/{name}/{name}.stories.tsx`
-3. Export from index: `src/components/{category}/{name}/index.ts`
+```bash
+src/components/{category}/{name}/
+├── {name}.tsx           # Component implementation
+├── {name}.stories.tsx   # Storybook stories
+└── index.ts             # Exports
+```
 
-### Story File Template
+### Story Template
 
 ```tsx
 import type { Meta, StoryObj } from "@storybook/react";
 import { ComponentName } from "./component-name";
 
-type ComponentStory = StoryObj<typeof ComponentName>;
-
 const meta: Meta<typeof ComponentName> = {
-    title: "Components/Category/ComponentName",
-    component: ComponentName,
-    tags: ["autodocs"],
-    parameters: { layout: "padded" },
+  title: "Components/Category/ComponentName",
+  component: ComponentName,
+  tags: ["autodocs"],
+  parameters: { layout: "padded" },
 };
 
 export default meta;
+type Story = StoryObj<typeof ComponentName>;
 
-export const Default: ComponentStory = {
-    args: { /* default props */ },
+export const Default: Story = {
+  args: {},
 };
 ```
 
@@ -126,208 +215,147 @@ export const Default: ComponentStory = {
 ```tsx
 import { cx } from "@/utils/cx";
 
-const Button = ({ variant, className }) => (
-    <button className={cx(
-        "base-classes",
-        variant === "primary" && "primary-classes",
-        className
-    )} />
-);
+<button className={cx(
+  "base-classes",
+  variant === "primary" && "primary-classes",
+  className
+)} />
 ```
 
-## React Aria Components
+---
 
-This project uses React Aria for accessible components. When creating interactive elements:
+## Accessibility
+
+| Requirement | Implementation |
+|-------------|----------------|
+| Keyboard Navigation | All interactive elements |
+| Focus States | `ring-*` utilities |
+| Color Contrast | 4.5:1 minimum |
+| Screen Readers | `aria-label`, `aria-describedby` |
+| Touch Targets | 44x44px minimum |
+
+### React Aria Pattern
 
 ```tsx
 import { Button } from "react-aria-components";
 
 // Use onPress instead of onClick
-<Button onPress={handleClick}>Click me</Button>
+<Button onPress={handleAction}>Click me</Button>
 ```
 
-## Accessibility Requirements
+---
 
-- All interactive elements must be keyboard accessible
-- Use semantic HTML elements
-- Provide aria-labels for icon-only buttons
-- Ensure 4.5:1 color contrast ratio for text
-- Focus states must be visible (using `ring-*` utilities)
+## Spacing & Layout
 
-## Available Agents
+### 4px Grid System
 
-This project has specialized sub-agents. Use `/agents` to list them.
+| Class | Value |
+|-------|-------|
+| `p-1` / `m-1` | 4px |
+| `p-2` / `m-2` | 8px |
+| `p-3` / `m-3` | 12px |
+| `p-4` / `m-4` | 16px |
+| `gap-*` | Flex/grid spacing |
 
-- **storybook-creator** - Create new components and stories
-- **storybook-tester** - Test components visually and functionally
-- **figma-implementer** - Translate Figma designs to code
-- **design-system-auditor** - Audit for consistency and compliance
-- **code-reviewer** - Review code quality and best practices
-- **codebase-explorer** - Fast search and navigation
-- **vercel-deployment-verifier** - Debug Vercel deployment failures
+### Border Radius
 
-## Automatic Agent Dispatch Rules
+| Class | Value | Usage |
+|-------|-------|-------|
+| `rounded-md` | 6px | Default |
+| `rounded-lg` | 8px | Buttons, inputs |
+| `rounded-xl` | 12px | Cards |
+| `rounded-full` | 9999px | Pills, avatars |
 
-**IMPORTANT**: When working on this project, automatically dispatch to the appropriate sub-agent based on the task. Do NOT ask the user - just use the agent.
-
-### 🔔 Agent Dispatch Notification (REQUIRED)
-
-**BEFORE dispatching to ANY sub-agent, you MUST output this notification:**
+### Shadows
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│ 🤖 DISPATCHING TO SUB-AGENT                                 │
-│                                                             │
-│ Agent: [agent-name]                                         │
-│ Task: [brief task description]                              │
-│ Reason: [why this agent was chosen]                         │
-└─────────────────────────────────────────────────────────────┘
+shadow-xs → shadow-sm → shadow-md → shadow-lg → shadow-xl
 ```
 
-This ensures visibility into agent delegation decisions.
+---
 
-### When to Use Each Agent
+## Key Files
 
-| Task Pattern | Agent to Use | Auto-Dispatch |
-|--------------|--------------|---------------|
-| "Create a component", "Add a new component", "Build a [X] component" | `storybook-creator` | ✅ Yes |
-| "Create stories for", "Add stories", "Write Storybook stories" | `storybook-creator` | ✅ Yes |
-| "Test component", "Verify rendering", "Check if [X] works" | `storybook-tester` | ✅ Yes |
-| "Implement from Figma", "Convert Figma design", "Match the Figma" | `figma-implementer` | ✅ Yes |
-| "Audit", "Check consistency", "Review design tokens usage" | `design-system-auditor` | ✅ Yes |
-| "Review code", "Check code quality", "Suggest improvements" | `code-reviewer` | ✅ Yes |
-| "Find where", "Search for", "Explore the codebase" | `codebase-explorer` | ✅ Yes |
-| "Vercel failed", "Deployment error", "Build failed on Vercel" | `vercel-deployment-verifier` | ✅ Yes |
+| File | Purpose |
+|------|---------|
+| `src/styles/theme.css` | Design tokens & CSS variables |
+| `design-tokens.tokens.json` | Figma-exported tokens |
+| `figma-export.json` | Full Figma export data |
+| `.claude/agents/*.md` | AI agent configurations |
+| `.claude/settings.json` | Claude Code settings |
 
-### Dispatch Syntax
+---
 
-When you identify a task that matches an agent's specialty, use:
+## Agent Dispatch
 
-```
-Task(agent: "agent-name", prompt: "Detailed task description")
-```
+Agents are automatically dispatched based on task patterns. No manual invocation needed.
 
-### Chaining Agents
+### Dispatch Rules
 
-For complex tasks, chain multiple agents:
+| Task | Agent |
+|------|-------|
+| Create/modify components | `storybook-creator` |
+| Test/verify components | `storybook-tester` |
+| Check Storybook status | `storybook-monitor` |
+| Implement Figma designs | `figma-implementer` |
+| Audit token compliance | `design-system-auditor` |
+| Review code quality | `code-reviewer` |
+| Search codebase | `codebase-explorer` |
+| Debug console errors | `browser-debugger` |
+| Fix deployment issues | `vercel-deployment-verifier` |
 
-1. **Creating a new component**: 
-   - First: `storybook-creator` to build component + stories
-   - Then: `design-system-auditor` to verify token usage
-   - Finally: `storybook-tester` to verify rendering
+### Post-Creation Workflow
 
-2. **Implementing from Figma**:
-   - First: `figma-implementer` to create the component
-   - Then: `storybook-tester` to compare with design
-   - Finally: `code-reviewer` for quality check
+After any component is created:
+1. `design-system-auditor` verifies token usage
+2. `storybook-tester` validates rendering
+3. `code-reviewer` checks quality
 
-3. **Fixing deployment issues**:
-   - First: `vercel-deployment-verifier` to diagnose
-   - Then: Fix the issue
-   - Finally: `storybook-tester` to verify locally
-
-### Example Auto-Dispatch
-
-User says: "Create a new QR code component"
-
-You should automatically:
-```
-Task(agent: "storybook-creator", prompt: "Create a QR code component with the following requirements:
-- Support for different sizes (xs, sm, md, lg, xl)
-- Custom colors
-- Error correction levels
-- Download functionality
-Include comprehensive Storybook stories demonstrating all variants.")
-```
-
-### Post-Creation Verification
-
-After creating any component, automatically run:
-```
-Task(agent: "design-system-auditor", prompt: "Audit the newly created [component-name] for:
-- Design token usage (no hardcoded colors)
-- Accessibility compliance
-- Consistent prop naming
-- Export from index file")
-```
-
-## Key Configuration Files
-
-- `src/styles/theme.css` - All design tokens and CSS variables
-- `design-tokens.tokens.json` - Figma-exported design tokens
-- `figma-export.json` - Full Figma component data
-- `vite.config.ts` - Vite and Storybook configuration
+---
 
 ## Testing
 
 ```bash
-# Run Vitest tests
-npm test
+# TypeScript check
+npx tsc --noEmit
 
-# Run with UI
-npm test -- --ui
+# Build Storybook (catches all component errors)
+npm run build-storybook
 
-# Run Storybook visual tests (requires Storybook running)
+# Run visual tests
 npm run test-storybook
 ```
 
-## Common Commands
+---
+
+## MCP Integrations
+
+| Server | Port | Tools |
+|--------|------|-------|
+| Figma Desktop | 3845 | `get_design_context`, `get_screenshot`, `get_variable_defs` |
+
+---
+
+## Troubleshooting
+
+### Storybook Won't Start
 
 ```bash
-npm run storybook      # Start Storybook on :6006
-npm run dev            # Start Vite on :5173
-npm run build          # Production build
-npm run build-storybook # Build static Storybook
+# Kill existing process
+pkill -f storybook
+
+# Clean restart
+rm -rf node_modules
+npm install
+npm run storybook
 ```
 
-## Verifying Sub-Agent Dispatch
-
-### Claude CLI Verbose Mode
-
-To see detailed output about agent dispatch, run:
+### TypeScript Errors
 
 ```bash
-claude --verbose
-# or
-claude -v
+npx tsc --noEmit 2>&1 | head -50
 ```
 
-### Expected Output When Sub-Agent Is Called
+### Console Errors
 
-When a sub-agent is invoked, you should see:
-
-1. **Dispatch notification** (the box above)
-2. **Agent activation header** (from the sub-agent itself):
-   ```
-   ╔══════════════════════════════════════════════════════════════╗
-   ║  📚 STORYBOOK CREATOR ACTIVATED                              ║
-   ║  Task: Create Button component with variants                 ║
-   ╚══════════════════════════════════════════════════════════════╝
-   ```
-3. **Sub-agent work output**
-4. **Completion notice**
-
-### Testing Agent Dispatch
-
-To verify agents are working, try these prompts:
-
-| Prompt | Expected Agent |
-|--------|----------------|
-| "Audit the Button component" | design-system-auditor |
-| "Create a new Card component" | storybook-creator |
-| "Test the Modal stories" | storybook-tester |
-| "Implement this Figma design" | figma-implementer |
-| "Review the recent code changes" | code-reviewer |
-| "Find all usages of cx utility" | codebase-explorer |
-| "The Vercel build is failing" | vercel-deployment-verifier |
-
-### Troubleshooting
-
-If sub-agents aren't being called:
-
-1. **Check agent files exist**: `.claude/agents/*.md`
-2. **Verify CLAUDE.md is in project root**
-3. **Use explicit trigger phrases** from agent descriptions
-4. **Try `/agents` command** to list available agents
-5. **Run with `--verbose`** to see decision process
-
+Invoke the `browser-debugger` agent or check the browser console directly.

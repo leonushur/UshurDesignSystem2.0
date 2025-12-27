@@ -93,9 +93,9 @@ export const AboutPage = () => {
                     ]}
                 />
 
-                <ContentSectionSplit eyebrow="Story" title="From design kit to production system" items={timelineItems} />
+                <ContentSectionSplit eyebrow="Story" title="From design kit to production system" content={timelineItems} />
 
-                <ContentSectionStack eyebrow="Principles" title="How we operate" items={missionPoints} />
+                <ContentSectionStack eyebrow="Principles" title="How we operate" sections={missionPoints} />
 
                 <SocialProofSectionGrid eyebrow="Teams we serve" title="Trusted by product orgs worldwide" logos={logos} columns={3} />
 

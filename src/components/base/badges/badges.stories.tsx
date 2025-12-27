@@ -47,7 +47,7 @@ const meta: Meta<typeof Badge> = {
         },
         type: {
             control: "select",
-            options: ["pill-color", "color", "modern"],
+            options: ["pill-color", "badge-color", "badge-modern"],
         },
     },
     args: {
@@ -73,13 +73,13 @@ export const Pill: Story = {
 
 export const Standard: Story = {
     args: {
-        type: "color",
+        type: "badge-color",
     },
 };
 
 export const Modern: Story = {
     args: {
-        type: "modern",
+        type: "badge-modern",
     },
 };
 

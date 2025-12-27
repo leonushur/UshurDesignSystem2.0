@@ -70,6 +70,14 @@ export const InputGroup = ({ size = "sm", prefix, leadingAddon, trailingAddon, l
             ),
             leadingText: "pl-3.5",
         },
+        lg: {
+            input: cx(
+                // Apply padding styles when select element is passed as a child
+                hasLeading && "group-has-[&>select]:px-3.5 group-has-[&>select]:pl-3.5",
+                hasTrailing && (prefix ? "group-has-[&>select]:pr-7 group-has-[&>select]:pl-0" : "group-has-[&>select]:pr-7 group-has-[&>select]:pl-3.5"),
+            ),
+            leadingText: "pl-4",
+        },
     });
 
     return (

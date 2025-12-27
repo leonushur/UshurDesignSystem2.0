@@ -1,0 +1,61 @@
+{
+  "hooks": [
+    {
+      "event": "SessionStart",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '🎨 Ushur Design System | 9 Agents Ready | Storybook: '$(lsof -i :6006 >/dev/null 2>&1 && echo 'RUNNING ✅' || echo 'STOPPED ⚠️')"
+        }
+      ]
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool_name": "Edit",
+        "file_path": "**/components/**/*.tsx"
+      },
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '📝 Component edited - consider: @design-system-auditor (tokens) | @storybook-tester (visual) | @browser-debugger (errors)'"
+        }
+      ]
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool_name": "Write",
+        "file_path": "**/components/**/*.tsx"
+      },
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '✨ New component created - WORKFLOW: @design-system-auditor → @storybook-creator (stories) → @storybook-tester'"
+        }
+      ]
+    },
+    {
+      "event": "PostToolUse",
+      "matcher": {
+        "tool_name": "Bash",
+        "command": "npm run storybook*"
+      },
+      "hooks": [
+        {
+          "type": "command",
+          "command": "sleep 3 && (lsof -i :6006 >/dev/null 2>&1 && echo '🚀 Storybook started: http://localhost:6006' || echo '❌ Storybook failed to start - check @storybook-monitor')"
+        }
+      ]
+    },
+    {
+      "event": "Stop",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "echo '🏁 Session complete | Remember: Update .claude/context/session-context.md with important context'"
+        }
+      ]
+    }
+  ]
+}

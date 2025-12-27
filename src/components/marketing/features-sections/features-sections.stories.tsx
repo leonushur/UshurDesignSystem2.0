@@ -6,6 +6,7 @@ import { Badge } from "@/components/base/badges/badges";
 
 const meta: Meta<typeof FeatureSectionIconGrid> = {
     title: "Marketing/Features Sections",
+    component: FeatureSectionIconGrid,
     parameters: {
         layout: "fullscreen",
     },
@@ -19,17 +20,17 @@ const iconGridFeatures = [
     {
         title: "Realtime automation",
         description: "Trigger personalized journeys across channels with unified customer profiles.",
-        icon: Zap,
+        icon: <Zap className="size-6" />,
     },
     {
         title: "Analytics intelligence",
         description: "Forecast revenue impact per experiment and share insights with GTM teams.",
-        icon: BarChartSquare02,
+        icon: <BarChartSquare02 className="size-6" />,
     },
     {
         title: "Enterprise governance",
         description: "SSO, SCIM, granular permissions, and audit logs keep data secure.",
-        icon: ShieldTick,
+        icon: <ShieldTick className="size-6" />,
         badge: <Badge size="sm">SOC2</Badge>,
     },
 ];
@@ -53,13 +54,13 @@ const cardFeatures = [
     {
         title: "Insights workspace",
         description: "An interactive command center that pulls in every KPI, campaign, and experiment.",
-        icon: Zap,
+        icon: <Zap className="size-5" />,
         stat: "↑124%",
     },
     {
         title: "Customer timeline",
         description: "Track key milestones, deal health, and expansion opportunities in one view.",
-        icon: ShieldTick,
+        icon: <ShieldTick className="size-5" />,
         badge: <Badge size="sm">New</Badge>,
         stat: "NPS 68",
     },

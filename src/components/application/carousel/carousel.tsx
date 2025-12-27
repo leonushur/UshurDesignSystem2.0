@@ -144,7 +144,7 @@ export const Carousel = ({
                             )}
                             aria-label="Previous slide"
                         >
-                            <ChevronLeft className="size-5 text-gray-900" />
+                            <ChevronLeft className="size-5 text-fg-primary" />
                         </button>
                         <button
                             onClick={handleNext}
@@ -154,7 +154,7 @@ export const Carousel = ({
                             )}
                             aria-label="Next slide"
                         >
-                            <ChevronRight className="size-5 text-gray-900" />
+                            <ChevronRight className="size-5 text-fg-primary" />
                         </button>
                     </>
                 )}

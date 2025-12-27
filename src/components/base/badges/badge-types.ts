@@ -257,8 +257,8 @@ export type BadgeTypeColors<T> = ExtractColorKeys<T[keyof T]>;
 
 export const badgeTypes = {
     pillColor: "pill-color",
-    badgeColor: "color",
-    badgeModern: "modern",
+    badgeColor: "badge-color",
+    badgeModern: "badge-modern",
 } as const;
 
 export type BadgeTypes = (typeof badgeTypes)[keyof typeof badgeTypes];

@@ -67,9 +67,9 @@ export const LegalPage = () => {
                     ]}
                 />
 
-                <ContentSectionSplit eyebrow="Overview" title="Our commitment to trust" items={policySections} />
+                <ContentSectionSplit eyebrow="Overview" title="Our commitment to trust" content={policySections} />
 
-                <ContentSectionStack eyebrow="Documents" title="Download policy documents" items={docLinks} />
+                <ContentSectionStack eyebrow="Documents" title="Download policy documents" sections={docLinks} />
 
                 <FAQSectionAccordion eyebrow="FAQ" title="Legal questions" items={faqItems} />
 

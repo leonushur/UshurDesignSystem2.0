@@ -6,18 +6,516 @@ A comprehensive React component library built with modern web technologies for b
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Quick Start (For Beginners)](#quick-start-for-beginners)
-- [Getting Started](#getting-started)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Import Patterns](#import-patterns)
+- [Primitives for Rapid UI Building](#primitives-for-rapid-ui-building)
+- [Design Tokens](#design-tokens)
+- [Example: Building a User Table](#example-building-a-user-table)
+- [Example: Building a Form](#example-building-a-form)
+- [Development Setup](#development-setup)
 - [Available Scripts](#available-scripts)
 - [Project Structure](#project-structure)
-- [Storybook Structure](#storybook-structure)
-- [Technologies Used](#technologies-used)
 - [Troubleshooting](#troubleshooting)
 - [Resources](#resources)
 - [License](#license)
 
-## Prerequisites
+---
+
+## Installation
+
+```bash
+npm install @ushur/design-system
+# or
+yarn add @ushur/design-system
+# or
+pnpm add @ushur/design-system
+# or
+bun add @ushur/design-system
+```
+
+### Peer Dependencies
+
+This package requires React 18+ or React 19:
+
+```bash
+npm install react react-dom
+```
+
+### Import Styles
+
+Add the design system styles to your app's entry point:
+
+```tsx
+// In your main.tsx or App.tsx
+import "@ushur/design-system/styles";
+```
+
+---
+
+## Quick Start
+
+```tsx
+import { Button, Input, Modal, Table } from "@ushur/design-system";
+import "@ushur/design-system/styles";
+
+function App() {
+  return (
+    <div className="p-8">
+      <h1 className="text-display-sm text-fg-primary mb-4">
+        Welcome to Ushur
+      </h1>
+      <Button color="primary" size="lg">
+        Get Started
+      </Button>
+    </div>
+  );
+}
+```
+
+---
+
+## Import Patterns
+
+### Full Import (Kitchen Sink)
+
+Import everything from the main entry point:
+
+```tsx
+import {
+  Button,
+  Input,
+  Modal,
+  Table,
+  TableCellAvatar,
+  StatusBadge,
+  useBreakpoint,
+  cx,
+} from "@ushur/design-system";
+```
+
+### Granular Imports (Recommended for Production)
+
+Import from specific modules for better tree-shaking:
+
+```tsx
+// Base UI components
+import { Button, Input, Select, Checkbox } from "@ushur/design-system/base";
+
+// Application-level patterns
+import { Modal, Table, Pagination, CommandMenu } from "@ushur/design-system/application";
+
+// Ready-to-use primitives
+import {
+  TableCellAvatar,
+  TableCellBadge,
+  StatusBadge,
+  AvatarLabelGroup
+} from "@ushur/design-system/primitives";
+
+// Visual elements
+import { Logo, SocialIcons, PaymentIcons } from "@ushur/design-system/foundations";
+
+// Marketing components
+import { Header, Footer, FeatureSection } from "@ushur/design-system/marketing";
+
+// Hooks
+import { useBreakpoint, useClipboard } from "@ushur/design-system/hooks";
+
+// Utilities
+import { cx } from "@ushur/design-system/utils";
+```
+
+---
+
+## Primitives for Rapid UI Building
+
+Primitives are pre-built, composable blocks that eliminate UI finagling. Just wire up your data and you're done.
+
+### Table Cell Primitives
+
+Build tables in minutes, not hours:
+
+```tsx
+import { Table } from "@ushur/design-system/application";
+import {
+  TableCellAvatar,
+  TableCellBadge,
+  TableCellStatus,
+  TableCellActions,
+  TableCellCheckbox,
+} from "@ushur/design-system/primitives";
+
+// Your data - this is all you need to provide
+const users = [
+  { id: 1, name: "Olivia Rhye", email: "olivia@ushur.com", status: "Active", role: "Admin" },
+  { id: 2, name: "Phoenix Baker", email: "phoenix@ushur.com", status: "Pending", role: "Member" },
+];
+
+// The UI writes itself
+<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.HeaderCell><TableCellCheckbox /></Table.HeaderCell>
+      <Table.HeaderCell>User</Table.HeaderCell>
+      <Table.HeaderCell>Status</Table.HeaderCell>
+      <Table.HeaderCell>Role</Table.HeaderCell>
+      <Table.HeaderCell></Table.HeaderCell>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    {users.map(user => (
+      <Table.Row key={user.id}>
+        <Table.Cell><TableCellCheckbox /></Table.Cell>
+        <Table.Cell>
+          <TableCellAvatar
+            primary={user.name}
+            secondary={user.email}
+            showStatus
+            status="online"
+          />
+        </Table.Cell>
+        <Table.Cell>
+          <TableCellBadge label={user.status} color="success" dot />
+        </Table.Cell>
+        <Table.Cell>
+          <TableCellBadge label={user.role} color="gray" />
+        </Table.Cell>
+        <Table.Cell>
+          <TableCellActions actions={[
+            { label: "Edit", onAction: () => editUser(user.id) },
+            { label: "Delete", destructive: true, onAction: () => deleteUser(user.id) },
+          ]} />
+        </Table.Cell>
+      </Table.Row>
+    ))}
+  </Table.Body>
+</Table.Root>
+```
+
+### Avatar Compositions
+
+Display users with consistent styling:
+
+```tsx
+import { AvatarLabelGroup, AvatarStack } from "@ushur/design-system/primitives";
+
+// Single user with details
+<AvatarLabelGroup
+  src="/avatars/olivia.jpg"
+  name="Olivia Rhye"
+  role="Product Designer"
+  email="olivia@ushur.com"
+  size="lg"
+/>
+
+// Multiple users (e.g., team members, assignees)
+<AvatarStack
+  avatars={[
+    { src: "/avatar1.jpg", name: "Olivia" },
+    { src: "/avatar2.jpg", name: "Phoenix" },
+    { src: "/avatar3.jpg", name: "Lana" },
+  ]}
+  max={3}
+/>
+```
+
+### Status & Category Badges
+
+Semantic status indicators:
+
+```tsx
+import { StatusBadge, CategoryBadge, DismissibleBadge } from "@ushur/design-system/primitives";
+
+// Status indicators - just pass the status, styling is automatic
+<StatusBadge status="active" />      // Green with dot
+<StatusBadge status="pending" />     // Yellow with dot
+<StatusBadge status="inactive" />    // Gray with dot
+<StatusBadge status="error" />       // Red with dot
+
+// Category tags
+<CategoryBadge label="Design" color="purple" />
+<CategoryBadge label="Engineering" color="blue" icon={CodeIcon} />
+
+// Removable tags (for filters, selections)
+<DismissibleBadge label="React" onDismiss={() => removeTag("react")} />
+```
+
+### Form Field Primitives
+
+Consistent form layouts:
+
+```tsx
+import { FieldWrapper, FieldLabel, FieldHint, FieldError } from "@ushur/design-system/primitives";
+import { Input } from "@ushur/design-system/base";
+
+// Complete field with label, hint, and validation
+<FieldWrapper>
+  <FieldLabel required tooltip="Your company email address">
+    Email
+  </FieldLabel>
+  <Input type="email" placeholder="you@company.com" />
+  <FieldHint>We'll never share your email.</FieldHint>
+  <FieldError>Please enter a valid email address.</FieldError>
+</FieldWrapper>
+```
+
+### Navigation Items
+
+Build sidebars and menus:
+
+```tsx
+import { NavItem, ActionItem, SelectableItem } from "@ushur/design-system/primitives";
+
+// Sidebar navigation
+<nav>
+  <NavItem icon={HomeIcon} active>Dashboard</NavItem>
+  <NavItem icon={UsersIcon}>Team</NavItem>
+  <NavItem icon={SettingsIcon}>Settings</NavItem>
+</nav>
+
+// Command palette / context menu items
+<ActionItem icon={CopyIcon} shortcut="Cmd+C">Copy</ActionItem>
+<ActionItem icon={TrashIcon} destructive>Delete</ActionItem>
+
+// Selectable items (for dropdowns)
+<SelectableItem selected>Option 1</SelectableItem>
+<SelectableItem>Option 2</SelectableItem>
+```
+
+---
+
+## Design Tokens
+
+Always use semantic tokens for consistent theming:
+
+### Text Colors
+
+```tsx
+<p className="text-fg-primary">Primary text</p>
+<p className="text-fg-secondary">Secondary text</p>
+<p className="text-fg-tertiary">Tertiary text</p>
+<p className="text-fg-disabled">Disabled text</p>
+<p className="text-fg-brand-primary">Brand text</p>
+<p className="text-fg-error-primary">Error text</p>
+<p className="text-fg-success-primary">Success text</p>
+```
+
+### Background Colors
+
+```tsx
+<div className="bg-bg-primary">Primary background</div>
+<div className="bg-bg-secondary">Secondary background</div>
+<div className="bg-bg-tertiary">Tertiary background</div>
+<div className="bg-bg-brand-primary">Brand background</div>
+<div className="bg-bg-error-primary">Error background</div>
+```
+
+### Border Colors
+
+```tsx
+<div className="border border-border-primary">Default border</div>
+<div className="border border-border-brand">Brand border</div>
+<div className="border border-border-error">Error border</div>
+```
+
+### Typography Scale
+
+```tsx
+// Display headings
+<h1 className="text-display-2xl">Display 2XL</h1>
+<h1 className="text-display-xl">Display XL</h1>
+<h2 className="text-display-lg">Display LG</h2>
+<h2 className="text-display-md">Display MD</h2>
+<h3 className="text-display-sm">Display SM</h3>
+<h4 className="text-display-xs">Display XS</h4>
+
+// Body text
+<p className="text-xl">Text XL</p>
+<p className="text-lg">Text LG</p>
+<p className="text-md">Text MD (default)</p>
+<p className="text-sm">Text SM</p>
+<p className="text-xs">Text XS</p>
+```
+
+---
+
+## Example: Building a User Table
+
+Here's a complete example of a user management table:
+
+```tsx
+import { useState } from "react";
+import { Table, Pagination, Modal } from "@ushur/design-system/application";
+import { Button, Input } from "@ushur/design-system/base";
+import {
+  TableCellAvatar,
+  TableCellBadge,
+  TableCellActions,
+  TableCellCheckbox,
+  StatusBadge,
+} from "@ushur/design-system/primitives";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  status: "active" | "pending" | "inactive";
+  role: string;
+  avatar?: string;
+}
+
+export function UserTable({ users }: { users: User[] }) {
+  const [selected, setSelected] = useState<string[]>([]);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+
+  const handleEdit = (user: User) => setEditingUser(user);
+  const handleDelete = (id: string) => {
+    // Your delete API call here
+  };
+
+  return (
+    <>
+      <Table.Root>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell className="w-12">
+              <TableCellCheckbox
+                checked={selected.length === users.length}
+                onCheckedChange={(checked) =>
+                  setSelected(checked ? users.map(u => u.id) : [])
+                }
+              />
+            </Table.HeaderCell>
+            <Table.HeaderCell>User</Table.HeaderCell>
+            <Table.HeaderCell>Status</Table.HeaderCell>
+            <Table.HeaderCell>Role</Table.HeaderCell>
+            <Table.HeaderCell className="w-20"></Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          {users.map((user) => (
+            <Table.Row key={user.id}>
+              <Table.Cell>
+                <TableCellCheckbox
+                  checked={selected.includes(user.id)}
+                  onCheckedChange={(checked) =>
+                    setSelected(prev =>
+                      checked
+                        ? [...prev, user.id]
+                        : prev.filter(id => id !== user.id)
+                    )
+                  }
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <TableCellAvatar
+                  src={user.avatar}
+                  primary={user.name}
+                  secondary={user.email}
+                />
+              </Table.Cell>
+              <Table.Cell>
+                <StatusBadge status={user.status} />
+              </Table.Cell>
+              <Table.Cell>
+                <TableCellBadge label={user.role} color="gray" />
+              </Table.Cell>
+              <Table.Cell>
+                <TableCellActions
+                  actions={[
+                    { label: "Edit", onAction: () => handleEdit(user) },
+                    { label: "Delete", destructive: true, onAction: () => handleDelete(user.id) },
+                  ]}
+                />
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table.Body>
+      </Table.Root>
+
+      <Modal.Root isOpen={!!editingUser} onOpenChange={() => setEditingUser(null)}>
+        <Modal.Content>
+          <Modal.Header>
+            <Modal.Title>Edit User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {/* Your form here - just wire up to your API */}
+            <Input defaultValue={editingUser?.name} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button color="secondary" onPress={() => setEditingUser(null)}>
+              Cancel
+            </Button>
+            <Button color="primary" onPress={() => { /* save */ }}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal.Content>
+      </Modal.Root>
+    </>
+  );
+}
+```
+
+---
+
+## Example: Building a Form
+
+Complete form with validation:
+
+```tsx
+import { Button, Input, Select, Checkbox } from "@ushur/design-system/base";
+import { FieldWrapper, FieldLabel, FieldError } from "@ushur/design-system/primitives";
+
+export function ContactForm({ onSubmit }: { onSubmit: (data: FormData) => void }) {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <FieldWrapper>
+        <FieldLabel required>Full Name</FieldLabel>
+        <Input name="name" placeholder="John Doe" />
+        {errors.name && <FieldError>{errors.name}</FieldError>}
+      </FieldWrapper>
+
+      <FieldWrapper>
+        <FieldLabel required>Email</FieldLabel>
+        <Input name="email" type="email" placeholder="john@company.com" />
+        {errors.email && <FieldError>{errors.email}</FieldError>}
+      </FieldWrapper>
+
+      <FieldWrapper>
+        <FieldLabel>Department</FieldLabel>
+        <Select.Root>
+          <Select.Trigger placeholder="Select department" />
+          <Select.Content>
+            <Select.Item value="engineering">Engineering</Select.Item>
+            <Select.Item value="design">Design</Select.Item>
+            <Select.Item value="marketing">Marketing</Select.Item>
+          </Select.Content>
+        </Select.Root>
+      </FieldWrapper>
+
+      <Checkbox name="terms">
+        I agree to the terms and conditions
+      </Checkbox>
+
+      <Button type="submit" color="primary" className="w-full">
+        Submit
+      </Button>
+    </form>
+  );
+}
+```
+
+---
+
+## Development Setup
+
+This section is for contributors developing the design system itself.
+
+### Prerequisites
 
 Before you begin, make sure you have the following installed on your computer:
 

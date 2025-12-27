@@ -41,19 +41,19 @@ export const CodeSnippet = ({
     return (
         <div
             className={cx(
-                "overflow-hidden rounded-xl border border-border-secondary bg-gray-900",
+                "overflow-hidden rounded-xl border border-border-secondary bg-bg-primary-solid",
                 className
             )}
         >
             {/* Header */}
             {(title || showCopyButton) && (
-                <div className="flex items-center justify-between border-b border-gray-700 px-4 py-2">
+                <div className="flex items-center justify-between border-b border-bg-secondary-solid px-4 py-2">
                     <div className="flex items-center gap-2">
                         {title && (
-                            <span className="text-sm font-medium text-gray-400">{title}</span>
+                            <span className="text-sm font-medium text-fg-quaternary">{title}</span>
                         )}
                         {language && (
-                            <span className="rounded bg-gray-700 px-2 py-0.5 text-xs text-gray-400">
+                            <span className="rounded bg-bg-secondary-solid px-2 py-0.5 text-xs text-fg-quaternary">
                                 {language}
                             </span>
                         )}
@@ -62,7 +62,7 @@ export const CodeSnippet = ({
                         <button
                             type="button"
                             onClick={handleCopy}
-                            className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-700 hover:text-white"
+                            className="flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-fg-quaternary transition-colors hover:bg-bg-secondary-solid hover:text-fg-white"
                         >
                             {copied ? (
                                 <>
@@ -86,13 +86,13 @@ export const CodeSnippet = ({
                 style={{ maxHeight: maxHeight ? `${maxHeight}px` : undefined }}
             >
                 <pre className="text-sm leading-relaxed">
-                    <code className="text-gray-100">
+                    <code className="text-fg-white">
                         {showLineNumbers ? (
                             <table className="w-full">
                                 <tbody>
                                     {lines.map((line, index) => (
                                         <tr key={index}>
-                                            <td className="select-none pr-4 text-right text-gray-500">
+                                            <td className="select-none pr-4 text-right text-fg-disabled">
                                                 {index + 1}
                                             </td>
                                             <td className="whitespace-pre">{line || " "}</td>
@@ -165,12 +165,12 @@ export const CodeSnippetTabs = ({
     return (
         <div
             className={cx(
-                "overflow-hidden rounded-xl border border-border-secondary bg-gray-900",
+                "overflow-hidden rounded-xl border border-border-secondary bg-bg-primary-solid",
                 className
             )}
         >
             {/* Tabs header */}
-            <div className="flex items-center justify-between border-b border-gray-700">
+            <div className="flex items-center justify-between border-b border-bg-secondary-solid">
                 <div className="flex">
                     {tabs.map((tab, index) => (
                         <button
@@ -180,8 +180,8 @@ export const CodeSnippetTabs = ({
                             className={cx(
                                 "px-4 py-2 text-sm font-medium transition-colors",
                                 activeTab === index
-                                    ? "border-b-2 border-brand-500 text-white"
-                                    : "text-gray-400 hover:text-gray-300"
+                                    ? "border-b-2 border-brand-500 text-fg-white"
+                                    : "text-fg-quaternary hover:text-fg-tertiary"
                             )}
                         >
                             {tab.label}
@@ -191,7 +191,7 @@ export const CodeSnippetTabs = ({
                 <button
                     type="button"
                     onClick={handleCopy}
-                    className="mr-2 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-700 hover:text-white"
+                    className="mr-2 flex items-center gap-1.5 rounded-md px-2 py-1 text-xs text-fg-quaternary transition-colors hover:bg-bg-secondary-solid hover:text-fg-white"
                 >
                     {copied ? (
                         <>
@@ -213,13 +213,13 @@ export const CodeSnippetTabs = ({
                 style={{ maxHeight: maxHeight ? `${maxHeight}px` : undefined }}
             >
                 <pre className="text-sm leading-relaxed">
-                    <code className="text-gray-100">
+                    <code className="text-fg-white">
                         {showLineNumbers ? (
                             <table className="w-full">
                                 <tbody>
                                     {lines.map((line, index) => (
                                         <tr key={index}>
-                                            <td className="select-none pr-4 text-right text-gray-500">
+                                            <td className="select-none pr-4 text-right text-fg-disabled">
                                                 {index + 1}
                                             </td>
                                             <td className="whitespace-pre">{line || " "}</td>

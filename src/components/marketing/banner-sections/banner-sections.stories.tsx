@@ -4,6 +4,7 @@ import { Button } from "@/components/base/buttons/button";
 
 const meta = {
     title: "Marketing/Banner Sections",
+    component: BannerSectionAnnouncement,
     parameters: {
         layout: "fullscreen",
     },

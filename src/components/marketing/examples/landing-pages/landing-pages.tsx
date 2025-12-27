@@ -80,20 +80,21 @@ const pricingPlans = [
 ];
 
 const testimonial = {
-    quote: "Ushur is the fastest way we’ve found to ship consistent product experiences. The component quality is unreal.",
+    quote: "Ushur is the fastest way we've found to ship consistent product experiences. The component quality is unreal.",
     author: {
         name: "Cam Nguyen",
-        role: "VP Product Design, LinearFlow",
+        role: "VP Product Design",
+        company: "LinearFlow",
     },
 };
 
 const socialProofItems = [
-    { label: "LinearFlow" },
-    { label: "Unison" },
-    { label: "Glimpse" },
-    { label: "Horizon" },
-    { label: "Compound" },
-    { label: "Northwind" },
+    { name: "LinearFlow" },
+    { name: "Unison" },
+    { name: "Glimpse" },
+    { name: "Horizon" },
+    { name: "Compound" },
+    { name: "Northwind" },
 ];
 
 export interface LandingPageProps {
@@ -130,10 +131,10 @@ export const LandingPageModern = ({ headerSlot }: LandingPageProps) => {
                     eyebrow="Why Ushur"
                     title="Everything you need to launch elite product experiences"
                     description="Ship onboarding flows, dashboards, marketing pages, and internal tools with confidence."
-                    items={featureItems}
+                    features={featureItems}
                 />
 
-                <MetricsSectionGrid eyebrow="Impact" title="Design systems that move metrics" items={metricItems} columns={2} />
+                <MetricsSectionGrid eyebrow="Impact" title="Design systems that move metrics" metrics={metricItems} columns={2} />
 
                 <PricingSectionCards
                     eyebrow="Pricing"
@@ -145,8 +146,7 @@ export const LandingPageModern = ({ headerSlot }: LandingPageProps) => {
                 <TestimonialSectionQuote
                     eyebrow="Testimonials"
                     title="Loved by modern product teams"
-                    quote={testimonial.quote}
-                    author={testimonial.author}
+                    testimonial={testimonial}
                 />
 
                 <CTASectionBanner

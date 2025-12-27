@@ -75,7 +75,7 @@ export const LandingPageProduct = () => {
                     eyebrow="Highlights"
                     title="Built for ambitious teams"
                     description="Skip the internal design system backlog. Focus on features that matter."
-                    items={featureCards}
+                    features={featureCards}
                 />
 
                 <PricingSectionCards

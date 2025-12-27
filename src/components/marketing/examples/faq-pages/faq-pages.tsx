@@ -56,17 +56,9 @@ const splitItems = [
     },
 ];
 
-const contactCards = [
-    {
-        title: "Talk to sales",
-        description: "For pricing, licensing, and implementation questions.",
-        channels: [{ label: "sales@untitledui.com", value: "Email", href: "mailto:sales@untitledui.com" }],
-    },
-    {
-        title: "Get product support",
-        description: "Send us links to your Storybook build and we’ll help you debug.",
-        channels: [{ label: "support@untitledui.com", value: "Email", href: "mailto:support@untitledui.com" }],
-    },
+const contactFields = [
+    { label: "Talk to sales", value: "sales@untitledui.com", href: "mailto:sales@untitledui.com" },
+    { label: "Get product support", value: "support@untitledui.com", href: "mailto:support@untitledui.com" },
 ];
 
 export const FAQPage = () => {
@@ -106,7 +98,7 @@ export const FAQPage = () => {
                     }
                 />
 
-                <ContactSectionCards eyebrow="Still need help?" title="Talk to a human" cards={contactCards} />
+                <ContactSectionCards eyebrow="Still need help?" title="Talk to a human" fields={contactFields} />
 
                 <CTASectionCentered
                     eyebrow="Ready to start?"

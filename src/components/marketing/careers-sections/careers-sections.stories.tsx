@@ -30,6 +30,7 @@ const openings = [
 
 const meta = {
     title: "Marketing/Careers Sections",
+    component: CareerSectionCards,
     parameters: {
         layout: "fullscreen",
     },

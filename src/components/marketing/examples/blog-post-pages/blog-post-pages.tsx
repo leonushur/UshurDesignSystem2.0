@@ -67,11 +67,11 @@ export const BlogPostPage = () => {
                     eyebrow="Highlights"
                     title="Why this playbook matters"
                     description="These strategies are based on dozens of successful enterprise rollouts."
-                    highlights={highlights}
+                    cards={highlights}
                 />
 
                 <article className="mx-auto max-w-3xl space-y-10 rounded-3xl border border-secondary bg-primary p-8 shadow-lg">
-                    <ContentSectionStack eyebrow="Article" title="Read the full story" items={articleBlocks} />
+                    <ContentSectionStack eyebrow="Article" title="Read the full story" sections={articleBlocks} />
                 </article>
 
                 <CTASectionBanner
