@@ -15,8 +15,8 @@ const ushurTheme = create({
 
     // Brand
     brandTitle: "Ushur Design System",
-    brandUrl: "https://www.ushur.com",
-    brandImage: "/ushur-logo.svg",
+    brandUrl: "?path=/story/welcome-introduction--welcome",
+    brandImage: "/ushur-logo-small.svg",
     brandTarget: "_self",
 
     // Colors
