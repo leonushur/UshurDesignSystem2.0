@@ -92,7 +92,7 @@ const TableCardRoot = ({ children, className, size = "md", ...props }: HTMLAttri
     );
 };
 
-interface TableCardHeaderProps {
+export interface TableCardHeaderProps {
     /** The title of the table card header. */
     title: string;
     /** The badge displayed next to the title. */
@@ -136,7 +136,7 @@ const TableCardHeader = ({ title, badge, description, contentTrailing, className
     );
 };
 
-interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"table">, "className" | "slot" | "style"> {
+export interface TableRootProps extends AriaTableProps, Omit<ComponentPropsWithRef<"table">, "className" | "slot" | "style"> {
     size?: "sm" | "md";
     enableResize?: boolean;
     enableReorder?: boolean;
@@ -176,7 +176,7 @@ const TableRoot = ({ className, size = "md", enableResize = false, enableReorder
 };
 TableRoot.displayName = "Table";
 
-interface TableHeaderProps<T extends object>
+export interface TableHeaderProps<T extends object>
     extends AriaTableHeaderProps<T>,
         Omit<ComponentPropsWithRef<"thead">, "children" | "className" | "slot" | "style"> {
     bordered?: boolean;
@@ -218,7 +218,7 @@ const TableHeader = <T extends object>({ columns, children, bordered = true, cla
 
 TableHeader.displayName = "TableHeader";
 
-interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
+export interface TableHeadProps extends AriaColumnProps, Omit<ThHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
     label?: string;
     tooltip?: string;
 }
@@ -368,7 +368,7 @@ const TableHead = ({ className, tooltip, label, children, id, ...props }: TableH
 };
 TableHead.displayName = "TableHead";
 
-interface TableRowProps<T extends object>
+export interface TableRowProps<T extends object>
     extends AriaRowProps<T>,
         Omit<ComponentPropsWithRef<"tr">, "children" | "className" | "onClick" | "slot" | "style" | "id"> {
     highlightSelectedRow?: boolean;
@@ -408,7 +408,7 @@ const TableRow = <T extends object>({ columns, children, className, highlightSel
 
 TableRow.displayName = "TableRow";
 
-interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
+export interface TableCellProps extends AriaCellProps, Omit<TdHTMLAttributes<HTMLTableCellElement>, "children" | "className" | "style" | "id"> {
     ref?: Ref<HTMLTableCellElement>;
 }
 

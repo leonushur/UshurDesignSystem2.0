@@ -55,7 +55,7 @@ export const CheckboxBase = ({ className, isSelected, isDisabled, isIndeterminat
 };
 CheckboxBase.displayName = "CheckboxBase";
 
-interface CheckboxProps extends AriaCheckboxProps {
+export interface CheckboxProps extends AriaCheckboxProps {
     ref?: Ref<HTMLLabelElement>;
     size?: "sm" | "md";
     label?: ReactNode;

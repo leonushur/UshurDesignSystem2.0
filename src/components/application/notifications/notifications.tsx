@@ -236,7 +236,7 @@ export const Toast = ({
                 <button
                     type="button"
                     onClick={onClose}
-                    className="text-gray-400 transition-colors hover:text-white"
+                    className="text-fg-quaternary transition-colors hover:text-fg-primary"
                     aria-label="Dismiss"
                 >
                     <XClose className="size-5" />

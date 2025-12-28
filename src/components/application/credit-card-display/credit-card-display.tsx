@@ -89,9 +89,9 @@ export const CreditCardDisplay = ({
     brandLogo,
 }: CreditCardDisplayProps) => {
     const variantStyles = {
-        default: "bg-gradient-to-br from-gray-700 to-gray-900 text-white",
-        premium: "bg-gradient-to-br from-purple-600 to-indigo-900 text-white",
-        dark: "bg-gray-900 text-white",
+        default: "bg-gradient-to-br from-utility-gray-700 to-utility-gray-900 text-fg-white",
+        premium: "bg-gradient-to-br from-utility-purple-600 to-utility-indigo-900 text-fg-white",
+        dark: "bg-utility-gray-900 text-fg-white",
     };
 
     return (
