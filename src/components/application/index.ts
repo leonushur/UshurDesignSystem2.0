@@ -37,10 +37,12 @@ export * from "./progress-steps";
 export * from "./modals/modal";
 export { SlideoutMenu } from "./slideout-menus/slideout-menu";
 export * from "./command-menu";
+export * from "./context-menu";
 
 // Layout
 export * from "./headers";
 export * from "./content-dividers";
+export * from "./accordion";
 
 // Interactive
 export * from "./date-picker/date-picker";

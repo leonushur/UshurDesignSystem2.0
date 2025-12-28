@@ -28,6 +28,16 @@
     transition-timing-function: inherit;
 }
 
+/* Skeleton shimmer animation */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
 html,
 body {
     font-family: var(--font-body);
