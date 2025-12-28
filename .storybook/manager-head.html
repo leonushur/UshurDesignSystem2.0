@@ -1,0 +1,12 @@
+<script>
+  // Redirect to Welcome/Introduction on first load or when visiting root
+  (function() {
+    const targetPath = '/story/welcome-introduction--welcome';
+    const currentPath = window.location.search;
+
+    // Only redirect if no path is specified (first visit or root URL)
+    if (!currentPath || currentPath === '' || currentPath === '?') {
+      window.location.replace('?path=' + targetPath);
+    }
+  })();
+</script>

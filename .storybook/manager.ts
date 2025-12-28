@@ -62,6 +62,8 @@ const ushurTheme = create({
 
 addons.setConfig({
     theme: ushurTheme,
+    // Load Welcome/Introduction first when visiting Storybook
+    initialActive: "sidebar",
     sidebar: {
         showRoots: true,
         collapsedRoots: ["other"],
