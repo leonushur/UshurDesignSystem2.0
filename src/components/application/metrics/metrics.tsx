@@ -72,9 +72,9 @@ export const MetricCard = ({
                 <span
                     className={cx(
                         "font-semibold text-fg-primary",
-                        size === "sm" && "text-xl",
-                        size === "md" && "text-2xl",
-                        size === "lg" && "text-3xl"
+                        size === "sm" && "text-display-xs",
+                        size === "md" && "text-display-sm",
+                        size === "lg" && "text-display-md"
                     )}
                 >
                     {value}
